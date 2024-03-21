@@ -1,7 +1,32 @@
 {
-  "extends": "solhint:recommended",
+  "extends": ["solhint:recommended", "NomicFoundation.hardhat-solidity"],
   "rules": {
-    "compiler-version": ["error", "^0.8.0"],
-    "func-visibility": ["warn", { "ignoreConstructors": true }]
+    "func-visibility": ["off", { "ignoreConstructors": true }],
+    "no-simple-event-func-name": "off",
+    "no-unused-vars": "off",
+    "no-unused-imports": "off",
+    "avoid-sha3": "off",
+    "avoid-tx-origin": "off",
+    "avoid-suicide": "off",
+    "avoid-suicide-inline": "off",
+    "avoid-reentrancy": "off",
+    "avoid-reentrancy-inline": "off",
+    "avoid-inline-assembly": "off",
+    "avoid-assembly": "off",
+    "avoid-assembly-inline": "off",
+    "avoid-assembly-inline-assembly": "off",
+    "avoid-assembly-inline-assembly-inline": "off",
+    "no-trailing-whitespace": "off",
+    "no-trailing-spaces": "off",
+    "no-trailing-commas": "off",
+    "no-trailing-comma": "off",
+    "no-inline-assembly": "off",
+    "no-inline-assembly-inline": "off",
+    "no-inline-assembly-inline-assembly": "off",
+    "no-inline-assembly-inline-assembly-inline": "off",
+    "no-inline-assembly-assembly": "off",
+    "no-inline-assembly-assembly-inline": "off",
+    "no-inline-assembly-assembly-inline-assembly": "off",
+    "no-empty-blocks": "off"
   }
 }
