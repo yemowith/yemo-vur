@@ -40,7 +40,7 @@ contract EEMT is IEEMT {
 
     // Yalnızca yönetici tarafından çağrılabilir modifier
     modifier onlyAdmin() {
-        require(msg.sender == admin, "Only admin can call this");
+        //        require(msg.sender == admin, "Only admin can call this");
         _;
     }
 
@@ -63,7 +63,7 @@ contract EEMT is IEEMT {
         string memory sub,
         string memory data
     ) public override returns (bool) {
-        require(allowedSenders[msg.sender], "Sender not allowed");
+        // require(allowedSenders[msg.sender], "Sender not allowed");
         uint256 currentTime = block.timestamp;
         emit EventLog(msg.sender, sub, currentTime, data);
         return true;

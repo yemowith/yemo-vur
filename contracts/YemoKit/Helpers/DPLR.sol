@@ -1,14 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.7.0 <0.9.0;
 
-
 interface IFA {
-    function getAddress(uint256 _salt, bytes calldata bytecode) external view returns (address);
-    function deploy(uint256 _salt, bytes calldata bytecode) external returns (address);
+    function getAddress(
+        uint256 _salt,
+        bytes calldata bytecode
+    ) external view returns (address);
+    function deploy(
+        uint256 _salt,
+        bytes calldata bytecode
+    ) external returns (address);
 }
 
 interface IDPLR {
-     function deploy(
+    function deploy(
         bytes memory bytecode,
         string memory _saltCode
     ) external returns (address);
@@ -70,7 +75,7 @@ contract FA {
 }
 
 // deployer contract
-contract DPLR    {
+contract DPLR {
     string public DEFAULT_CODE = "Yemo";
     address public FAA;
     mapping(uint256 => address) public createdContracts;
@@ -95,17 +100,16 @@ contract DPLR    {
     function deploy(
         bytes memory bytecode,
         string memory _saltCode
-    ) public returns (address) {
-    
+    ) external returns (address) {
         uint256 _salt = makeSalt(_codeSalt(_saltCode));
-        IFA(FAA). deploy(_salt, bytecode);
-        lasttAddress =  IFA(FAA).getAddress(_salt, bytecode);
+        IFA(FAA).deploy(_salt, bytecode);
+        lasttAddress = IFA(FAA).getAddress(_salt, bytecode);
         createdContracts[_codeSalt(_saltCode)] = lasttAddress;
         return lasttAddress;
     }
 
     function updateLastAddress(uint256 _salt, bytes memory bytecode) internal {
-        lasttAddress =  IFA(FAA).getAddress(_salt, bytecode);
+        lasttAddress = IFA(FAA).getAddress(_salt, bytecode);
     }
 
     function getFromLastAddress(

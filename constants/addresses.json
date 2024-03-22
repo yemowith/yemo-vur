@@ -1,0 +1,17 @@
+[
+  {
+    "_address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "chainID": "1",
+    "code": "WETH"
+  },
+  {
+    "_address": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
+    "chainID": "1",
+    "code": "swapRoute"
+  },
+  {
+    "_address": "0x6d80113e533a2c0fe82eabd35f1875dcea89ea97",
+    "chainID": "137",
+    "code": "MATICFORKED"
+  }
+]

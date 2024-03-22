@@ -9,6 +9,8 @@ import "./Helpers/DDSP.sol";
 import "./Helpers/PY.sol";
 import "./Helpers/Onlntd.sol";
 
+import "./Modules/vat/VATModule.sol";
+
 interface IYemoKit {
     function init() external returns (bool);
     function dply(
@@ -26,6 +28,13 @@ interface IYemoKit {
     function dplyPY(address _owner) external returns (address);
 
     function addCBTCD(bytes32 _key, bytes memory _data) external returns (bool);
+
+    function getEEMT() external view returns (address);
+    function getDPLR() external view returns (address);
+    function getSTG() external view returns (address);
+    function getDSSPF() external view returns (address);
+    function getADRSB() external view returns (address);
+    function getWETH() external view returns (address);
 }
 
 contract YemoKit is Onl {
@@ -34,14 +43,43 @@ contract YemoKit is Onl {
     address public dsspf; // DSSProxy factory Contract (factory) // IDSSP
     address public stg; // EEMT
     address public adrsb; // Address book
+    address public weth; // WETH address
 
     mapping(address => address) public pys;
+
+    address public vatModule;
+    VATModule public vat;
 
     constructor(address _owner) {
         owner = _owner;
     }
 
-    function init() external returns (bool) {
+    function getWETH() external view returns (address) {
+        return weth;
+    }
+
+    function getEEMT() external view returns (address) {
+        return eemt;
+    }
+
+    function getDSSPF() external view returns (address) {
+        return dsspf;
+    }
+
+    function getDPLR() external view returns (address) {
+        return dplr;
+    }
+
+    function getSTG() external view returns (address) {
+        return stg;
+    }
+
+    function getADRSB() external view returns (address) {
+        return adrsb;
+    }
+
+    function init(address _weth) external returns (bool) {
+        weth = _weth;
         _init();
         return true;
     }
@@ -81,7 +119,7 @@ contract YemoKit is Onl {
         );
         address py = _dply(bytecode, "PY");
         _addPY(py);
-        return py;
+        return IDPLR(dplr).getLastAddress();
     }
 
     function addCBTCD(
@@ -96,7 +134,7 @@ contract YemoKit is Onl {
         bytes memory _bytecode,
         string memory _salt
     ) internal onlyInited returns (address) {
-        address addr = IDPLR(dplr).deploy(_bytecode, _salt);
+        address addr = address(IDPLR(dplr).deploy(_bytecode, _salt));
         IEEMT(eemt).emitEvent("DP", "Yemo deployed");
         return addr;
     }
@@ -105,18 +143,21 @@ contract YemoKit is Onl {
         pys[_py] = address(0);
     }
 
+    function _newVAT() internal onlyInited {
+        vatModule = address(new VATModule(this));
+        vat = VATModule(vatModule);
+    }
+
     function _init() internal {
         require(address(eemt) == address(0), "Already inited");
         eemt = address(new EEMT(owner));
         dplr = address(new DPLR());
+
         dsspf = address(new DDSPF());
         stg = address(new STG(owner));
         adrsb = address(new ADRSB(owner));
-        intd = true;
-    }
 
-    function kill() external onlyInited {
-        require(msg.sender == owner, "Only owner can kill");
-        selfdestruct(payable(owner));
+        vat = address(new VATModule(this));
+        intd = true;
     }
 }

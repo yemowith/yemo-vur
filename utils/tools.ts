@@ -1,5 +1,5 @@
 import { BigNumber, Contract } from "ethers"
-import hre, { ethers, tenderly } from "hardhat"
+import hre, { ethers } from "hardhat"
 import { logg } from "./core/logger"
 export type DeployResult = {
     name: string
@@ -9,10 +9,7 @@ export type DeployResult = {
     contract: any
 }
 
-const deploy = async (
-    name: string,
-    args: any[] = [],
-): Promise<DeployResult> => {
+const deploy = async (name: string, args: any[] = []): Promise<DeployResult> => {
     const c = await ethers.getContractFactory(name)
     const cD = await c.deploy(...args)
     const deployed = (await cD.deployed()) as Contract
@@ -41,10 +38,7 @@ const verify = async (c: DeployResult) => {
         })
         console.log(`Verification successful for ${c.name} at ${c.address}`)
     } catch (error) {
-        console.error(
-            `Verification failed for ${c.name} at ${c.address}`,
-            error,
-        )
+        console.error(`Verification failed for ${c.name} at ${c.address}`, error)
     }
     console.log("Contract verified!")
     return c
@@ -67,19 +61,8 @@ const toEther = (wei: string | number, decimals: number = 18) => {
 
 const fromEther = (eth: string | number, decimals: number = 18) => {
     const etherString = eth.toString()
-    const ether =
-        decimals !== undefined
-            ? parseFloat(etherString).toFixed(decimals)
-            : etherString
+    const ether = decimals !== undefined ? parseFloat(etherString).toFixed(decimals) : etherString
     return ethers.utils.parseEther(ether)
-}
-
-const verifyContract = async (data: any) => {
-    console.log("Verifying contract...")
-
-    const v = await tenderly.verify(data)
-    console.log("Contract verified!")
-    return v
 }
 
 const maxApproveAmount = (): BigNumber => {
@@ -88,9 +71,7 @@ const maxApproveAmount = (): BigNumber => {
 
 const getChainId = async () => {
     // wtite your script here
-    const chainId = await ethers.provider
-        .getNetwork()
-        .then((network) => network.chainId)
+    const chainId = await ethers.provider.getNetwork().then((network) => network.chainId)
     const chainIdBN = BigNumber.from(chainId)
     const chainIdStr = chainIdBN.toString()
 
@@ -103,7 +84,6 @@ export {
     deployAndVerify,
     toEther,
     fromEther,
-    verifyContract,
     maxApproveAmount,
     getChainId,
     contactAt,
