@@ -1,76 +1,65 @@
-import { YemoVur } from "./../../typechain-types/contracts/YemoVur/YemoVur.sol/YemoVur";
-import { ethers } from "hardhat";
-import { deployFirstContracts } from "./deploy";
-import { logg } from "../../utils/core/logger";
-import { deploy } from "../../utils/tools";
-import { sendETH } from "../../utils/clients/transfers";
+import { ethers, tenderly } from "hardhat"
+import { deploy, fromEther, toEther } from "../../utils/tools"
+import { balanceOfETH, sendETH } from "../../utils/clients/transfers"
+import { logg } from "../../utils/core/logger"
+import { BigNumber } from "ethers"
 
-const firstDeploy = true;
-let addresses = {
-  DPLR: "",
-  DSSP: "",
-  Eventter: "",
-  YemoVur: "",
-};
+const chargeC = async (c: string, a: BigNumber) => {
+    const b = await balanceOfETH(c)
+    if (b < a) {
+        logg.info(`Charge ${a} ETH to ${c}`)
+        await sendETH(c, toEther(1))
+    }
+    return b
+}
 
-const makeDeploying = async () => {
-  if (firstDeploy) {
-    let dpdrs = await deployFirstContracts();
-    addresses = { ...dpdrs };
-  }
-
-  return {
-    DPLR: await ethers.getContractAt("DPLR", addresses.DPLR),
-    DSSP: await ethers.getContractAt("DSSProxyFactory", addresses.DSSP),
-    Eventter: await ethers.getContractAt("EventEmitter", addresses.Eventter),
-    YemoVur: await ethers.getContractAt("YemoVur", addresses.YemoVur),
-  };
-};
-
-const calculateGas = async (tx: any) => {
-  const receipt = await tx.wait();
-  const gasUsed = receipt.gasUsed;
-  const gasPrice = await ethers.provider.getGasPrice();
-  return gasUsed.mul(gasPrice);
-};
+const sleep = (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms))
+}
 
 const setup = async () => {
-  logg.info("Deploying contracts...");
-  let { DPLR, DSSP, Eventter, YemoVur } = await makeDeploying();
+    logg.info("Deploying YSetup")
+    const stp = await deploy("YSetup")
 
-  await new Promise((resolve) => setTimeout(resolve, 100));
+    logg.info("Call Setup ", stp.address)
+    await stp.contract.stp()
 
-  await Eventter.addAllowedSender(YemoVur.address);
+    logg.info("Get Adreses")
+    const [dplr, ddsp, eemt] = await stp.contract.gA()
 
-  await YemoVur.init(DPLR.address, DSSP.address, Eventter.address);
+    logg.success("DPLR address: ", dplr)
+    logg.success("DDSP address: ", ddsp)
+    logg.success("EEMT address: ", eemt)
 
-  return {
-    dldct: { DPLR, DSSP, Eventter, YemoVur },
-  };
-};
+    const stpA = stp.address
+
+    return { stpA, dplr, ddsp, eemt }
+}
 
 async function yemoVur() {
-  const [deployer, player] = await ethers.getSigners();
+    const [deployer, player] = await ethers.getSigners()
 
-  const { dldct } = await setup();
+    const balanceD = await balanceOfETH(deployer.address)
+    logg.success("Deployer balance: ", toEther(balanceD))
+    if (balanceD.lt(toEther(1))) {
+        throw new Error("Deployer balance is too low")
+    }
+    // const { stpA, dplr, ddsp, eemt } = await setup()
 
-  // yemo buraya geldin
-  // devam etmeden once eth gönder YemoVura
+    const yv = await deploy("YemoVur")
+    const yva = yv.address
+    await chargeC(yva, toEther(1))
 
-  /*
-    const YemoVur = (await _deployers.YemoVur(_deployers.Deployer.address, DSSPADR, EventterADR)).contract
-    const YemoVurADR = YemoVur.address
+    //const yva = "0x0b88Dc42000E530Cf45707566Bf80c5E2A6389Be"
+    const yemoVur = await ethers.getContractAt("YemoVur", yva)
+    // await chargeC(yva)
 
-    await Eventter.addAllowedSender(YemoVurADR)
-    logg.info('Eventter: addAllowedSender', YemoVurADR)
-
-    */
-
-  logg.info("Addresses: ");
-  console.table(addresses);
+    const vur = (await yemoVur.vur({ gasLimit: 500000000 })).wait(1)
+    const r = await yemoVur.vurR()
+    console.log(r)
 }
 
 yemoVur().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+    console.error(error)
+    process.exitCode = 1
+})

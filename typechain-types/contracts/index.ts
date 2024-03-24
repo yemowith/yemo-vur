@@ -5,3 +5,7 @@ import type * as mocks from "./MOCKS";
 export type { mocks };
 import type * as yemoKit from "./YemoKit";
 export type { yemoKit };
+import type * as yemoVault from "./YemoVault";
+export type { yemoVault };
+import type * as yemoVur from "./YemoVur";
+export type { yemoVur };

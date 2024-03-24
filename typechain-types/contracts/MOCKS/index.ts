@@ -3,3 +3,4 @@
 /* eslint-disable */
 import type * as testEventSenderSol from "./TestEventSender.sol";
 export type { testEventSenderSol };
+export type { YemoToken } from "./YemoToken";

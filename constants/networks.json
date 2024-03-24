@@ -1,149 +1,164 @@
 {
-    "networks": [
-      {
-        "chainId": 1,
-        "code": "ETH",
-        "name": "Ethereum",
-        "isTest": false,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": "mainnet"
-      },
-      {
-        "chainId": 137,
-        "code": "MATIC",
-        "name": "Polygon",
-        "isTest": false,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": "polygon-mainnet"
-      },
-      {
-        "chainId": 123,
-        "code": "LINEA",
-        "name": "Linea",
-        "isTest": false,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": "linea-mainnet"
-      },
-      {
-        "chainId": 10,
-        "code": "OVM",
-        "name": "Optimism",
-        "isTest": false,
-        "isForked": false,
-        "rpcServer": "",
-        "linkCode": "optimism-mainnet"
-      },
-      {
-        "chainId": 42161,
-        "code": "AVAX",
-        "name": "Avalanche",
-        "isTest": false,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": "avalanche-mainnet"
-      },
-      {
-        "chainId": 79377087078960,
-        "code": "ARBITRUM",
-        "name": "Arbitrum",
-        "isTest": false,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": "arbitrum-mainnet"
-      },
-      {
-        "chainId": 20,
-        "code": "STARKNET",
-        "name": "Starknet",
-        "isTest": false,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": "starknet-mainnet"
-      },
-      {
-        "chainId": 250,
-        "code": "FTM",
-        "name": "Fantom",
-        "isTest": false,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": ""
-      },
-      {
-        "chainId": 56,
-        "code": "BSC",
-        "name": "Binance Smart Chain",
-        "isTest": false,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": ""
-      },
-      {
-        "chainId": 2,
-        "code": "FTMTESTNET",
-        "name": "Fantom Testnet",
-        "isTest": true,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": ""
-      },
-      {
-        "chainId": 97,
-        "code": "BSCTESTNET",
-        "name": "Binance Smart Chain Testnet",
-        "isTest": true,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": ""
-      },
-      {
-        "chainId": 5,
-        "code": "GOERLI",
-        "name": "Goerli",
-        "isTest": true,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": "goerli"
-      },
-      {
-        "chainId": 80001,
-        "code": "MUMBAI",
-        "name": "Mumbai",
-        "isTest": true,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": "polygon-mumbai"
-      },
-      {
-        "chainId": 421611,
-        "code": "SEPOLIA",
-        "name": "Sepolia",
-        "isTest": true,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": "sepolia"
-      },
-      {
-        "chainId": 793770870789601,
-        "code": "OPTIMISMSEPOLIA",
-        "name": "Optimism Sepolia",
-        "isTest": true,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": "optimism-sepolia"
-      },
-      {
-        "chainId": 793770870789602,
-        "code": "ARBITRUMSEPOLIA",
-        "name": "Arbitrum Sepolia",
-        "isTest": true,
-        "isForked": false,
-        "rpcServer": "#",
-        "linkCode": "arbitrum-sepolia"
-      }
-    ]
-  }
-  
+  "networks": [
+    {
+      "chainId": 1,
+      "code": "ETH",
+      "name": "Ethereum",
+      "isTest": false,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "mainnet",
+      "active": false
+    },
+    {
+      "chainId": 137,
+      "code": "MATIC",
+      "name": "Polygon",
+      "isTest": false,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "polygon-mainnet",
+      "active": false
+    },
+    {
+      "chainId": 123,
+      "code": "LINEA",
+      "name": "Linea",
+      "isTest": false,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "linea-mainnet",
+      "active": false
+    },
+    {
+      "chainId": 10,
+      "code": "OVM",
+      "name": "Optimism",
+      "isTest": false,
+      "isForked": false,
+      "rpcServer": "",
+      "linkCode": "optimism-mainnet",
+      "active": false
+    },
+    {
+      "chainId": 42161,
+      "code": "AVAX",
+      "name": "Avalanche",
+      "isTest": false,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "avalanche-mainnet",
+      "active": false
+    },
+    {
+      "chainId": 79377087078960,
+      "code": "ARBITRUM",
+      "name": "Arbitrum",
+      "isTest": false,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "arbitrum-mainnet",
+      "active": false
+    },
+    {
+      "chainId": 20,
+      "code": "STARKNET",
+      "name": "Starknet",
+      "isTest": false,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "starknet-mainnet",
+      "active": false
+    },
+    {
+      "chainId": 250,
+      "code": "FTM",
+      "name": "Fantom",
+      "isTest": false,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "",
+      "active": false
+    },
+    {
+      "chainId": 56,
+      "code": "BSC",
+      "name": "Binance Smart Chain",
+      "isTest": false,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "",
+      "active": false
+    },
+    {
+      "chainId": 2,
+      "code": "FTMTESTNET",
+      "name": "Fantom Testnet",
+      "isTest": true,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "",
+      "active": false
+    },
+    {
+      "chainId": 97,
+      "code": "BSCTESTNET",
+      "name": "Binance Smart Chain Testnet",
+      "isTest": true,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "",
+      "active": false
+    },
+    {
+      "chainId": 5,
+      "code": "GOERLI",
+      "name": "Goerli",
+      "isTest": true,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "goerli",
+      "active": false
+    },
+    {
+      "chainId": 80001,
+      "code": "MUMBAI",
+      "name": "Mumbai",
+      "isTest": true,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "polygon-mumbai",
+      "active": false
+    },
+    {
+      "chainId": 421611,
+      "code": "SEPOLIA",
+      "name": "Sepolia",
+      "isTest": true,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "sepolia",
+      "active": false
+    },
+    {
+      "chainId": 793770870789601,
+      "code": "OPTIMISMSEPOLIA",
+      "name": "Optimism Sepolia",
+      "isTest": true,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "optimism-sepolia",
+      "active": false
+    },
+    {
+      "chainId": 793770870789602,
+      "code": "ARBITRUMSEPOLIA",
+      "name": "Arbitrum Sepolia",
+      "isTest": true,
+      "isForked": false,
+      "rpcServer": "#",
+      "linkCode": "arbitrum-sepolia",
+      "active": false
+    }
+  ]
+}

@@ -17,7 +17,8 @@
     "script:deploy": "npx hardhat run ./src/scripts/deployers/deployall.ts",
     "tester": "npx hardhat run ./src/tester.ts",
     "event:watch": "npx hardhat run ./src/events/events-listner.ts",
-    "yemovur": "npx hardhat run ./src/yemovur/Yemovur.ts"
+    "yemovur": "npx hardhat run ./src/yemovur/Yemovur.ts",
+    "hh": "npx hardhat"
   },
   "devDependencies": {
     "@0xsequence/create3": "https://github.com/0xsequence/create3",
@@ -63,7 +64,10 @@
   },
   "dependencies": {
     "@openzeppelin/test-helpers": "^0.5.10",
+    "@tenderly/hardhat-tenderly": "^1.7.7",
+    "@tenderly/sdk": "^0.1.14",
     "@truffle/contract": "^4.0.0",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "dsa-connect": "^0.6.75"
   }
 }

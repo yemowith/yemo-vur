@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
-
 pragma solidity >=0.4.23;
 
-contract DSNote {
+contract DSNt {
     event LogNote(
         bytes4 indexed sig,
         address indexed guy,
@@ -29,7 +28,7 @@ contract DSNote {
     }
 }
 
-interface DSAuthority {
+interface DSAthrt {
     function canCall(
         address src,
         address dst,
@@ -37,13 +36,13 @@ interface DSAuthority {
     ) external view returns (bool);
 }
 
-contract DSAuthEvents {
+contract DSAthEvnts {
     event LogSetAuthority(address indexed authority);
     event LogSetOwner(address indexed owner);
 }
 
-contract DSAuth is DSAuthEvents {
-    DSAuthority public authority;
+contract DSAth is DSAthEvnts {
+    DSAthrt public authority;
     address public owner;
 
     constructor() public {
@@ -56,7 +55,7 @@ contract DSAuth is DSAuthEvents {
         emit LogSetOwner(owner);
     }
 
-    function setAuthority(DSAuthority authority_) public auth {
+    function setAuthority(DSAthrt authority_) public auth {
         authority = authority_;
         emit LogSetAuthority(address(authority));
     }
@@ -74,7 +73,7 @@ contract DSAuth is DSAuthEvents {
             return true;
         } else if (src == owner) {
             return true;
-        } else if (authority == DSAuthority(address(0))) {
+        } else if (authority == DSAthrt(address(0))) {
             return false;
         } else {
             return authority.canCall(src, address(this), sig);
@@ -82,11 +81,74 @@ contract DSAuth is DSAuthEvents {
     }
 }
 
-contract DDSP is DSAuth, DSNote {
-    DDSPCache public cache; // global cache for contracts
+contract DDSPCch {
+    mapping(bytes32 => address) cache;
+
+    function read(bytes memory _code) public view returns (address) {
+        bytes32 hash = keccak256(_code);
+        return cache[hash];
+    }
+
+    function write(bytes memory _code) public returns (address target) {
+        assembly {
+            target := create(0, add(_code, 0x20), mload(_code))
+            switch iszero(extcodesize(target))
+            case 1 {
+                // throw if contract failed to deploy
+                revert(0, 0)
+            }
+        }
+        bytes32 hash = keccak256(_code);
+        cache[hash] = target;
+    }
+}
+
+interface IDDSP {
+    function execute(
+        address target,
+        bytes memory data
+    ) external payable returns (bytes memory res);
+}
+
+contract DDSPF {
+    event Created(
+        address indexed sender,
+        address indexed owner,
+        address proxy,
+        address cache
+    );
+    mapping(address => bool) public isProxy;
+    mapping(address => address) public proxies;
+    DDSPCch public cache;
+
+    constructor() public {
+        cache = new DDSPCch();
+    }
+
+    // deploys a new proxy instance
+    // sets custom owner of proxy
+    function build(address owner) external returns (address payable proxy) {
+        proxy = payable(address(new DDSP(address(cache))));
+        emit Created(msg.sender, owner, address(proxy), address(cache));
+        DDSP(proxy).setOwner(owner);
+        isProxy[proxy] = true;
+        proxies[owner] = proxy;
+
+        return proxy;
+    }
+
+    // Function to get proxy address for a given owner
+    function getProxy(address owner) external view returns (address) {
+        require(isProxy[proxies[owner]], "No proxy exists for this owner");
+        return proxies[owner];
+    }
+}
+
+contract DDSP is DSAth, DSNt {
+    DDSPCch public cache; // global cache for contracts
 
     constructor(address _cacheAddr) public {
-        setCache(_cacheAddr);
+        setCch(_cacheAddr);
     }
 
     // If you want the contract to accept plain Ether transactions without calling a function:
@@ -145,72 +207,9 @@ contract DDSP is DSAuth, DSNote {
     }
 
     //set new cache
-    function setCache(address _cacheAddr) public auth note returns (bool) {
+    function setCch(address _cacheAddr) public auth note returns (bool) {
         require(_cacheAddr != address(0), "ds-proxy-cache-address-required");
-        cache = DDSPCache(_cacheAddr); // overwrite cache
+        cache = DDSPCch(_cacheAddr); // overwrite cache
         return true;
     }
-}
-
-contract DDSPF {
-    event Created(
-        address indexed sender,
-        address indexed owner,
-        address proxy,
-        address cache
-    );
-    mapping(address => bool) public isProxy;
-    mapping(address => address) public proxies;
-    DDSPCache public cache;
-
-    constructor() public {
-        cache = new DDSPCache();
-    }
-
-    // deploys a new proxy instance
-    // sets custom owner of proxy
-    function build(address owner) external returns (address payable proxy) {
-        proxy = payable(address(new DDSP(address(cache))));
-        emit Created(msg.sender, owner, address(proxy), address(cache));
-        DDSP(proxy).setOwner(owner);
-        isProxy[proxy] = true;
-        proxies[owner] = proxy;
-
-        return proxy;
-    }
-
-    // Function to get proxy address for a given owner
-    function getProxy(address owner) external view returns (address) {
-        require(isProxy[proxies[owner]], "No proxy exists for this owner");
-        return proxies[owner];
-    }
-}
-
-contract DDSPCache {
-    mapping(bytes32 => address) cache;
-
-    function read(bytes memory _code) public view returns (address) {
-        bytes32 hash = keccak256(_code);
-        return cache[hash];
-    }
-
-    function write(bytes memory _code) public returns (address target) {
-        assembly {
-            target := create(0, add(_code, 0x20), mload(_code))
-            switch iszero(extcodesize(target))
-            case 1 {
-                // throw if contract failed to deploy
-                revert(0, 0)
-            }
-        }
-        bytes32 hash = keccak256(_code);
-        cache[hash] = target;
-    }
-}
-
-interface IDDSP {
-    function execute(
-        address target,
-        bytes memory data
-    ) external payable returns (bytes memory res);
 }

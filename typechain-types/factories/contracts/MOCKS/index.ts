@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as testEventSenderSol from "./TestEventSender.sol";
+export { YemoToken__factory } from "./YemoToken__factory";

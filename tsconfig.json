@@ -7,14 +7,13 @@
         "strict": true,
         "skipLibCheck": true,
         "resolveJsonModule": true,
-
         "noImplicitReturns": false,
         "noUnusedLocals": false,
         "noUnusedParameters": false,
         "paths": {
-            "@/utils": ["./utils/*"],
-            "@/scripts": ["./src/scripts/*"],
-            "@/constants": ["./constants/*"]
+            "@utils/*": ["./utils/*"],
+            "@scripts/*": ["./src/scripts/*"],
+            "@constant/*": ["./constants/*"]
         }
     }
 }

@@ -1,13 +1,33 @@
 {
-  "customNetworks": [
-    {
-      "chainId": 137,
-      "code": "MATICFORKED",
-      "name": "Polygon Forked",
-      "isTest": true,
-      "isForked": true,
-      "rpcServer": "https://rpc.tenderly.co/fork/371c4f16-0ac1-45d2-824f-9884d83b9e3d",
-      "linkCode": ""
-    }
-  ]
+    "customNetworks": [
+        {
+            "chainId": 137,
+            "code": "MATICFORKED",
+            "name": "Polygon Forked",
+            "isTest": true,
+            "isForked": true,
+            "rpcServer": "https://rpc.tenderly.co/fork/371c4f16-0ac1-45d2-824f-9884d83b9e3d",
+            "linkCode": ""
+        },
+        {
+            "chainId": 8453,
+            "code": "BASEFORKED",
+            "name": "Base Forked",
+            "isTest": true,
+            "isForked": true,
+            "rpcServer": "https://rpc.tenderly.co/fork/632f250c-1a54-4b17-a62b-b2f51716f8cc",
+            "linkCode": "",
+            "allowUnlimitedContractSize": true
+        },
+        {
+            "chainId": 10,
+            "code": "OVMFORKED",
+            "name": "Optimism Forked",
+            "isTest": true,
+            "isForked": true,
+            "rpcServer": "https://rpc.vnet.tenderly.co/devnet/yemovur/95a234bd-a97a-4790-8a6c-641024007e1f",
+            "linkCode": "",
+            "allowUnlimitedContractSize": true
+        }
+    ]
 }

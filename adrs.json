@@ -1,0 +1,29 @@
+{
+    "WBTC": {
+        "base": "0xe20fCBdBfFC4Dd138cE8b2E6FBb6CB49777ad64D",
+        "mainnet": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+        "polygun": "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6"
+    },
+    "WETH": {
+        "base": "0x4200000000000000000000000000000000000006",
+        "mainnet": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "polygun": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
+    },
+    "USDC": {
+        "polygun": "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
+        "mainnet": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "base": "0x4200000000000000000000000000000000000006",
+        "fantom": "0x04068da6c83afcfa0e13ba15a6696662335d5b75"
+    },
+    "addressProvider": {
+        "optim": "0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb",
+        "fantom": "0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb",
+        "mainnet": "0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e",
+        "arbitrum": "0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb",
+        "polygon": "0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb",
+        "base": "0xe20fCBdBfFC4Dd138cE8b2E6FBb6CB49777ad64D"
+    },
+    "_swapRouter": {
+        "optim": "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+    }
+}

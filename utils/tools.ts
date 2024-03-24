@@ -9,9 +9,15 @@ export type DeployResult = {
     contract: any
 }
 
-const deploy = async (name: string, args: any[] = []): Promise<DeployResult> => {
+const deploy = async (
+    name: string,
+    args: any[] = [],
+    gasLimit: number = 1000000000
+): Promise<DeployResult> => {
     const c = await ethers.getContractFactory(name)
-    const cD = await c.deploy(...args)
+
+    const cD = await c.deploy(...args, { gasLimit: gasLimit })
+
     const deployed = (await cD.deployed()) as Contract
     logg.info(`Deployed ${name} to: ${deployed.address}`)
     return {

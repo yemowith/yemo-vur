@@ -3,3 +3,5 @@
 /* eslint-disable */
 export * as mocks from "./MOCKS";
 export * as yemoKit from "./YemoKit";
+export * as yemoVault from "./YemoVault";
+export * as yemoVur from "./YemoVur";
