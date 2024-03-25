@@ -55,8 +55,6 @@ abstract contract YF is FlashLoanSimpleReceiverBase {
         );
     }
 
-    //This function is called after your contract has received the flash loaned amount
-
     function aterFl(uint256 _amount) internal returns (bool) {
         return true;
     }
