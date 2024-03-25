@@ -2,13 +2,15 @@ import { ethers, tenderly } from "hardhat"
 import { deploy, fromEther, toEther } from "../../utils/tools"
 import { balanceOfETH, sendETH } from "../../utils/clients/transfers"
 import { logg } from "../../utils/core/logger"
-import { BigNumber } from "ethers"
+import { BigNumber, ContractReceipt } from "ethers"
+import { Adrs, adrsG } from "../addressesG"
 
+const adrs: Adrs = adrsG
 const chargeC = async (c: string, a: BigNumber) => {
     const b = await balanceOfETH(c)
     if (b < a) {
         logg.info(`Charge ${a} ETH to ${c}`)
-        await sendETH(c, toEther(1))
+        await sendETH(c, a)
     }
     return b
 }
@@ -17,46 +19,78 @@ const sleep = (ms: number) => {
     return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-const setup = async () => {
+const aAdrs = (k: string): string => {
+    return adrs[k as keyof typeof adrs] as string
+}
+
+const setup = async (owner: string) => {
     logg.info("Deploying YSetup")
-    const stp = await deploy("YSetup")
+    const _stp = await deploy("YSetup", [owner])
+    const stp = await ethers.getContractAt("YSetup", _stp.address)
 
     logg.info("Call Setup ", stp.address)
-    await stp.contract.stp()
+    await stp.stp()
 
     logg.info("Get Adreses")
-    const [dplr, ddsp, eemt] = await stp.contract.gA()
+    const [adrsb, dplr, ddsp, eemt] = await stp.gA()
 
+    logg.success("ADRSB address: ", adrsb)
     logg.success("DPLR address: ", dplr)
     logg.success("DDSP address: ", ddsp)
     logg.success("EEMT address: ", eemt)
 
+    for (const [k, v] of Object.entries(adrs)) {
+        await stp.addAddress(k, v, { gasLimit: 1000000000 })
+        logg.info(`Adding ${v} to ${k}`)
+    }
+
     const stpA = stp.address
 
-    return { stpA, dplr, ddsp, eemt }
+    return { stpA, adrsb, dplr, ddsp, eemt }
+}
+
+const ckblnc = async (deployer: string) => {
+    const balanceD = await balanceOfETH(deployer)
+    logg.success("Deployer balance: ", toEther(balanceD))
+    if (balanceD.lt(toEther(1))) {
+        throw new Error("Deployer balance is too low")
+    }
 }
 
 async function yemoVur() {
     const [deployer, player] = await ethers.getSigners()
 
-    const balanceD = await balanceOfETH(deployer.address)
-    logg.success("Deployer balance: ", toEther(balanceD))
-    if (balanceD.lt(toEther(1))) {
-        throw new Error("Deployer balance is too low")
-    }
-    // const { stpA, dplr, ddsp, eemt } = await setup()
+    const adrsb = "0x7827d55109484686340c63a48360f8938c4f37bb"
+    await ckblnc(deployer.address)
 
-    const yv = await deploy("YemoVur")
-    const yva = yv.address
-    await chargeC(yva, toEther(1))
+    let amount = toEther(0.1)
 
-    //const yva = "0x0b88Dc42000E530Cf45707566Bf80c5E2A6389Be"
-    const yemoVur = await ethers.getContractAt("YemoVur", yva)
-    // await chargeC(yva)
+    /*
+  const yv = await deploy("YemoVur", [deployer.address, adrsb])
+    const yemoVur = await ethers.getContractAt("YemoVur", yv.address)
+    await chargeC(yv.address, toEther(1))
+     let defa = await yemoVur.newDefa(aAdrs("weth"), deployer.address, amount, "Yemo", {
+        gasLimit: 100000000,
+        gasPrice: 10000000000,
+    })
+    await defa
+        .wait()
+        .then((t: ContractReceipt) => {
+            logg.silent("Status: ", t.status)
+            logg.silent("Gas used: ", t.gasUsed)
+            logg.silent("Transaction hash: ", t.transactionHash)
+            logg.silent("Contract address: ", t.contractAddress)
+            logg.silent("Cumulative gas used: ", t.cumulativeGasUsed)
+            logg.silent("Logs: ", t.logs)
+            logg.silent("Events: ", t.events)
+        })
+        .catch((e: any) => {
+            logg.error("Error: ", e)
+        })
 
-    const vur = (await yemoVur.vur({ gasLimit: 500000000 })).wait(1)
-    const r = await yemoVur.vurR()
-    console.log(r)
+    let defa = await yv.deployed.gDefa(defaID)
+    logg.success("Defa: ", defa)
+    */
 }
 
 yemoVur().catch((error) => {

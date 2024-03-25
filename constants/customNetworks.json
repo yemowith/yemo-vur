@@ -25,7 +25,7 @@
             "name": "Optimism Forked",
             "isTest": true,
             "isForked": true,
-            "rpcServer": "https://rpc.vnet.tenderly.co/devnet/yemovur/95a234bd-a97a-4790-8a6c-641024007e1f",
+            "rpcServer": "https://rpc.tenderly.co/fork/511ce70c-5f69-4af9-94b6-07074280e134",
             "linkCode": "",
             "allowUnlimitedContractSize": true
         }

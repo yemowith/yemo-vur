@@ -1,22 +1,33 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.20;
 
-import "./DPLR.sol";
-import "./DDSP.sol";
-import "./EEMT.sol";
+import "./imprt.sol";
 
 contract YSetup {
+    address public owner;
     string public _p = "Ymn";
     address public _dplr;
 
+    address public adrsb;
     address public dplr;
     address public ddsp;
     address public eemt;
 
     bool private done = false;
 
-    constructor() {
+    constructor(address _owner) {
         _dplr = address(new DPLR());
+        owner = _owner;
+    }
+
+    function _makeADRSB() public returns (address) {
+        uint256 _salt = uint256(keccak256(abi.encodePacked(_p)));
+        bytes memory _b = abi.encodePacked(
+            type(ADRSB).creationCode,
+            abi.encode(owner)
+        );
+        adrsb = IDPLR(_dplr).dpl(_salt, _b);
+        return adrsb;
     }
 
     function _makeDPLR() internal returns (address) {
@@ -41,15 +52,26 @@ contract YSetup {
     }
 
     function stp() external returns (bool) {
+        _makeADRSB();
         _makeDPLR();
         _makeDDSP();
         _makeEEMT();
+
+        IADRSB(adrsb).adrs("adrsb", adrsb);
+        IADRSB(adrsb).adrs("dplr", dplr);
+        IADRSB(adrsb).adrs("ddsp", ddsp);
+        IADRSB(adrsb).adrs("eemt", eemt);
+
         done = true;
         return (true);
     }
 
-    function gA() external view returns (address, address, address) {
+    function addAddress(string memory _key, address _adrs) public {
+        IADRSB(adrsb).adrs(_key, _adrs);
+    }
+
+    function gA() external view returns (address, address, address, address) {
         require(done, "First call setup");
-        return (dplr, ddsp, eemt);
+        return (adrsb, dplr, ddsp, eemt);
     }
 }

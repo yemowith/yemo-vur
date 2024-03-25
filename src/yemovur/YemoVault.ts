@@ -40,6 +40,7 @@ async function yemoVur() {
     const ddsp = "0x7C33316a158B81bEBf9570879F10a44271006561"
     const eemt = "0x7C33316a158B81bEBf9570879F10a44271006561"
     const appInsta = "0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb"
+    const weth = "0x4200000000000000000000000000000000000006"
 
     const balanceD = await balanceOfETH(deployer.address)
     if (balanceD.lt(toEther(minAmt))) {
@@ -49,7 +50,8 @@ async function yemoVur() {
 
     const yv = await deploy("YemoVault", [deployer.address, dplr, ddsp, eemt, appInsta])
     const yva = yv.address
-    await chargeC(yva, toEther(minAmt))
+    const yemoV = await ethers.getContractAt("YemoVault", yva)
+    await chargeC(yemoV.address, toEther(minAmt))
 }
 
 yemoVur().catch((error) => {

@@ -68,6 +68,9 @@
     "@tenderly/sdk": "^0.1.14",
     "@truffle/contract": "^4.0.0",
     "dotenv": "^16.0.3",
-    "dsa-connect": "^0.6.75"
+    "dsa-connect": "^0.6.75",
+    "@connext/interfaces": "^2.0.0",
+    "@connext/sdk": "^0.2.7",
+    "@types/memoizee": "^0.4.8"
   }
 }

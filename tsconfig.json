@@ -10,6 +10,10 @@
         "noImplicitReturns": false,
         "noUnusedLocals": false,
         "noUnusedParameters": false,
+        "noImplicitThis": false,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": false,
+
         "paths": {
             "@utils/*": ["./utils/*"],
             "@scripts/*": ["./src/scripts/*"],

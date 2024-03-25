@@ -76,6 +76,7 @@ const makeNetworkHardhat = (): NetworksUserConfig => {
             networksModifed[network.code] = {
                 accounts: [process.env.PRIVATE_KEY || ""],
                 url: net.rpcServer,
+                gas: 10000000,
                 ...net,
             }
         }
@@ -85,6 +86,7 @@ const makeNetworkHardhat = (): NetworksUserConfig => {
         networksModifed[net.code] = {
             accounts: [process.env.PRIVATE_KEY || ""],
             url: net.rpcServer,
+            gas: 10000000,
             ...net,
         }
     })

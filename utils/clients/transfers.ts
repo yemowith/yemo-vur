@@ -20,7 +20,7 @@ const sendETH = async (to: string, amount: BigNumber): Promise<TransactionRespon
     const transaction = {
         to: to,
         value: amount,
-        gasLimit: 500000,
+        gasLimit: 1000000,
     }
     const sendResult = await deployer.sendTransaction(transaction)
     console.log(`Sent ETH amount ${ethAmount} to ${to} using signer`)
