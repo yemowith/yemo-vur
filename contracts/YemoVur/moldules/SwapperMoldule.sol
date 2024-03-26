@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "../helpers/BaseMoldule.sol";
 
-contract Swapper is BaseMoldule {
+contract SwapperMoldule is BaseMoldule {
     uint256 public executeCount;
 
     constructor(address _owner) {

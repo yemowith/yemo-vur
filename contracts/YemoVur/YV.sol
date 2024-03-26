@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "./imprt.sol";
 
-contract YS is WYK {
+contract YV is WYK {
     address public owner;
 
     modifier onlyOwner() {

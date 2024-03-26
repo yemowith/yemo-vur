@@ -65,11 +65,10 @@ async function yemoVur() {
 
     let amount = toEther(0.1)
 
-    /*
-  const yv = await deploy("YemoVur", [deployer.address, adrsb])
+    const yv = await deploy("YemoVur", [deployer.address, adrsb])
     const yemoVur = await ethers.getContractAt("YemoVur", yv.address)
     await chargeC(yv.address, toEther(1))
-     let defa = await yemoVur.newDefa(aAdrs("weth"), deployer.address, amount, "Yemo", {
+    let defa = await yemoVur.newDefa(aAdrs("weth"), deployer.address, amount, "Yemo", {
         gasLimit: 100000000,
         gasPrice: 10000000000,
     })
@@ -90,7 +89,6 @@ async function yemoVur() {
 
     let defa = await yv.deployed.gDefa(defaID)
     logg.success("Defa: ", defa)
-    */
 }
 
 yemoVur().catch((error) => {

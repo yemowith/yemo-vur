@@ -25,11 +25,13 @@ contract WYK {
         ADRSB_ = ADRSB(_a);
         DPLR_ = DPLR(ADRSB_.gAdrs("dplr"));
         DDSP_ = DDSP(payable(ADRSB_.gAdrs("ddsp")));
-
         LNDRF_ = LNDRF(ADRSB_.gAdrs("lndrf"));
         LNDC_ = LNDC(payable(ADRSB_.gAdrs("lndc")));
         MDLR_ = MDLR(ADRSB_.gAdrs("mdlr"));
-
         WETH_ = ADRSB_.gAdrs("weth");
+    }
+
+    function adrsOf(string memory key) public view returns (address) {
+        return ADRSB_.gAdrs(key);
     }
 }

@@ -3,6 +3,7 @@ pragma solidity ^0.8.15;
 
 import {IConnext} from "@connext/interfaces/core/IConnext.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {BaseMoldule} from "../helpers/BaseMoldule.sol";
 
 interface IWETH {
     function deposit() external payable;
@@ -11,7 +12,7 @@ interface IWETH {
     function transfer(address dst, uint wad) external returns (bool);
 }
 
-contract Bridger {
+contract BridgerMoldule is BaseMoldule {
     // The connext contract on the origin domain
     IConnext public immutable connext;
 

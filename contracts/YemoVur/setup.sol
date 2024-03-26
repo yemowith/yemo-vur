@@ -3,11 +3,12 @@ pragma solidity ^0.8.20;
 
 import "./imprt.sol";
 
-contract YSetup {
+contract setup {
     address public owner;
     string public _p = "Ymn";
     address public _dplr;
 
+    // tools liste start
     address public adrsb;
     address public dplr;
     address public ddsp;
@@ -15,6 +16,8 @@ contract YSetup {
     address public lndrf;
     address public lndc;
     address public mdlr;
+
+    // tools liste end
 
     bool private done = false;
 

@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.15;
 
-contract BorrowRepay {
+import "../helpers/BaseMoldule.sol";
+
+contract BorrowRepayMoldule is BaseMoldule {
     address public lender;
     address public borrower;
     uint256 public loanAmount;

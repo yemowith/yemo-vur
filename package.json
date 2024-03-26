@@ -63,14 +63,15 @@
     "typescript": "^5.4.3"
   },
   "dependencies": {
+    "@connext/interfaces": "^2.0.0",
+    "@connext/sdk": "^0.2.7",
     "@openzeppelin/test-helpers": "^0.5.10",
     "@tenderly/hardhat-tenderly": "^1.7.7",
     "@tenderly/sdk": "^0.1.14",
     "@truffle/contract": "^4.0.0",
+    "@types/memoizee": "^0.4.8",
+    "@uniswap/v2-periphery": "^1.1.0-beta.0",
     "dotenv": "^16.0.3",
-    "dsa-connect": "^0.6.75",
-    "@connext/interfaces": "^2.0.0",
-    "@connext/sdk": "^0.2.7",
-    "@types/memoizee": "^0.4.8"
+    "dsa-connect": "^0.6.75"
   }
 }
