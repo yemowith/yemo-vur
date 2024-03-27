@@ -2,15 +2,6 @@
 pragma solidity >=0.4.23;
 
 contract DSNt {
-    event LogNote(
-        bytes4 indexed sig,
-        address indexed guy,
-        bytes32 indexed foo,
-        bytes32 indexed bar,
-        uint256 wad,
-        bytes fax
-    ) anonymous;
-
     modifier note() {
         bytes32 foo;
         bytes32 bar;
@@ -23,8 +14,6 @@ contract DSNt {
         }
 
         _;
-
-        emit LogNote(msg.sig, msg.sender, foo, bar, wad, msg.data);
     }
 }
 
@@ -36,28 +25,20 @@ interface DSAthrt {
     ) external view returns (bool);
 }
 
-contract DSAthEvnts {
-    event LogSetAuthority(address indexed authority);
-    event LogSetOwner(address indexed owner);
-}
-
-contract DSAth is DSAthEvnts {
+contract DSAth {
     DSAthrt public authority;
     address public owner;
 
     constructor() public {
         owner = msg.sender;
-        emit LogSetOwner(msg.sender);
     }
 
     function setOwner(address owner_) public auth {
         owner = owner_;
-        emit LogSetOwner(owner);
     }
 
     function setAuthority(DSAthrt authority_) public auth {
         authority = authority_;
-        emit LogSetAuthority(address(authority));
     }
 
     modifier auth() {
@@ -181,12 +162,6 @@ contract DDSP is DSAth, DSNt {
 }
 
 contract DDSPF {
-    event Created(
-        address indexed sender,
-        address indexed owner,
-        address proxy,
-        address cache
-    );
     mapping(address => bool) public isProxy;
     mapping(address => address) public proxies;
     DDSPCch public cache;
@@ -199,7 +174,6 @@ contract DDSPF {
     // sets custom owner of proxy
     function build(address owner) external returns (address payable proxy) {
         proxy = payable(address(new DDSP(address(cache))));
-        emit Created(msg.sender, owner, address(proxy), address(cache));
         DDSP(proxy).setOwner(owner);
         isProxy[proxy] = true;
         proxies[owner] = proxy;

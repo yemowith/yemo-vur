@@ -529,23 +529,6 @@ interface IPool {
     ) external;
 }
 
-interface IEEMT {
-    // Event definition
-    event EventLog(address indexed from, string sub, uint256 time, string data);
-
-    // Function to emit an event
-    function emitEvent(
-        string memory sub,
-        string memory data
-    ) external returns (bool);
-
-    // Function to receive event requests
-    function receiveEventRequest(
-        string memory sub,
-        string memory data
-    ) external returns (bool);
-}
-
 interface IERC20 {
     function totalSupply() external view returns (uint256);
     function balanceOf(address account) external view returns (uint256);
@@ -594,57 +577,9 @@ interface IPY {
     function setimplt(address _implt) external;
 }
 
-interface IBVat {
-    function deposit(address token, uint256 amount) external;
-    function withdraw(address token, uint256 amount, address receiver) external;
-    function withdrawWETH(uint256 amount) external;
-}
-
 interface IWETH {
     function deposit() external payable;
     function withdraw(uint256) external;
 
     function transfer(address dst, uint wad) external returns (bool);
-}
-
-interface IBOMBA {
-    function vur(address _token, uint256 _amount) external returns (bool);
-    function glstlqltamt() external view returns (uint256);
-}
-
-interface IDEFAC {
-    struct SBOMBA {
-        address pyA;
-        address bombaA;
-    }
-
-    struct Defa {
-        uint256 id;
-        address token;
-        address rcvrAdr;
-        uint256 amount;
-        SBOMBA pompa;
-        address caller;
-        uint256 time;
-        string status;
-    }
-
-    function yeniBomba(
-        string memory _n
-    ) external view returns (address, address);
-    function newDefa(
-        address _token,
-        address _reciver,
-        uint256 _amount,
-        string memory _bombaName
-    ) external returns (uint256);
-    function startDefa(uint256 _defaId) external;
-    function initDefa(uint256 _defaId) external;
-    function gSOMBA(string memory _name) external view returns (SBOMBA memory);
-    function gDefa(uint256 _id) external view returns (Defa memory);
-}
-
-interface IADRSB {
-    function adrs(string memory _key, address _adrs) external returns (bool);
-    function gAdrs(string memory _key) external view returns (address);
 }

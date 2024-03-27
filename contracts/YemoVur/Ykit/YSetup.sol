@@ -11,7 +11,6 @@ contract YSetup {
     address public adrsb;
     address public dplr;
     address public ddsp;
-    address public eemt;
 
     bool private done = false;
 
@@ -44,23 +43,14 @@ contract YSetup {
         return ddsp;
     }
 
-    function _makeEEMT() public returns (address) {
-        uint256 _salt = uint256(keccak256(abi.encodePacked(_p)));
-        bytes memory _b = abi.encodePacked(type(EEMT).creationCode);
-        eemt = IDPLR(_dplr).dpl(_salt, _b);
-        return eemt;
-    }
-
     function stp() external returns (bool) {
         _makeADRSB();
         _makeDPLR();
         _makeDDSP();
-        _makeEEMT();
 
         IADRSB(adrsb).adrs("adrsb", adrsb);
         IADRSB(adrsb).adrs("dplr", dplr);
         IADRSB(adrsb).adrs("ddsp", ddsp);
-        IADRSB(adrsb).adrs("eemt", eemt);
 
         done = true;
         return (true);
@@ -70,8 +60,8 @@ contract YSetup {
         IADRSB(adrsb).adrs(_key, _adrs);
     }
 
-    function gA() external view returns (address, address, address, address) {
+    function gA() external view returns (address, address, address) {
         require(done, "First call setup");
-        return (adrsb, dplr, ddsp, eemt);
+        return (adrsb, dplr, ddsp);
     }
 }
