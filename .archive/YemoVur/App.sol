@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "./contstans/ModuleRegistry.sol";
+import "./core/modules/ModuleRegistry.sol";
 
 contract App {
     ModuleRegistry private _moduleRegistry;

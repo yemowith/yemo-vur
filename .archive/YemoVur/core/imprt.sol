@@ -3,7 +3,6 @@ pragma solidity ^0.8.0;
 
 // indexerss
 import "contracts/YemoVur/core/indexers/IndexerRegistry.sol";
-import "contracts/YemoVur/core/vaults/VaultIndexer.sol";
 
 // core
 import "contracts/YemoVur/core/Abilities.sol";
