@@ -1,79 +1,98 @@
-import { ethers, tenderly } from "hardhat"
-import { deploy, fromEther, toEther } from "../utils/tools"
-import { balanceOfETH, sendETH } from "../utils/clients/transfers"
-import { logg } from "../utils/core/logger"
-import { BigNumber, ContractReceipt } from "ethers"
-import { Adrs, adrsG } from "./addressesG"
-import { getWETH } from "@utils/clients/weth"
+import { ethers } from "hardhat"
+import { toEther } from "../utils/tools"
 
-const adrs: Adrs = adrsG
-const chargeC = async (c: string, a: BigNumber) => {
-    const b = await balanceOfETH(c)
-    if (b < a) {
-        logg.info(`Charge ${a} ETH to ${c}`)
-        await sendETH(c, a)
-    }
-    return b
-}
+import { accounts } from "./utils"
+import { logg } from "@utils/core/logger"
 
-const sleep = (ms: number) => {
-    return new Promise((resolve) => setTimeout(resolve, ms))
-}
+const minETH = toEther(0.1)
 
-const aAdrs = (k: string): string => {
-    return adrs[k as keyof typeof adrs] as string
-}
+async function makeYSpace() {
+    const [deployer] = await accounts()
+    const deploys = [
+        {
+            name: "YProxy",
+            params: [deployer.address],
+            address: "",
+        },
+        {
+            name: "YSpace",
+            params: [],
+            address: "",
+        },
+    ]
 
-const setup = async (owner: string) => {
-    logg.info("Deploying YSetup")
-    const _stp = await deploy("YSetup", [owner])
-    const stp = await ethers.getContractAt("YSetup", _stp.address)
-
-    logg.info("Call Setup ", stp.address)
-    await stp.stp()
-
-    logg.info("Get Adreses")
-    const [adrsb, dplr, ddsp, eemt] = await stp.gA()
-
-    logg.success("ADRSB address: ", adrsb)
-    logg.success("DPLR address: ", dplr)
-    logg.success("DDSP address: ", ddsp)
-    logg.success("EEMT address: ", eemt)
-
-    for (const [k, v] of Object.entries(adrs)) {
-        await stp.addAddress(k, v, { gasLimit: 1000000000 })
-        logg.info(`Adding ${v} to ${k}`)
+    for (const deploy of deploys) {
+        const contract = await ethers.getContractFactory(deploy.name, deployer)
+        const instance = await contract.deploy(...deploy.params)
+        deploy.address = instance.address
+        logg.success(`Deployed ${deploy.name}: ${instance.address}`)
     }
 
-    const stpA = stp.address
+    const getContractOf = (name: string): string => {
+        const contractAddress = deploys.find((d) => d.name === name)?.address
+        if (!contractAddress) {
+            throw new Error(`Contract with name ${name} not found`)
+        }
+        return contractAddress
+    }
 
-    return { stpA, adrsb, dplr, ddsp, eemt }
-}
+    /*
+        set proxy of YSpace
+    */
+    const _YProxy = getContractOf("YProxy")
+    await (await ethers.getContractAt("YProxy", _YProxy)).setImplementation(getContractOf("YSpace"))
 
-const ckblnc = async (deployer: string) => {
-    const balanceD = await balanceOfETH(deployer)
-    logg.success("Deployer balance: ", toEther(balanceD))
-    if (balanceD.lt(toEther(1))) {
-        throw new Error("Deployer balance is too low")
+    logg.info(`Proxy Address: ${_YProxy}`)
+    logg.info(`Space Address: ${getContractOf("YSpace")}`)
+
+    return {
+        proxy: _YProxy,
+        space: getContractOf("YSpace"),
     }
 }
-
 async function yemoVur() {
     const [deployer, player] = await ethers.getSigners()
+    /* 
+    const _VLTFLS = (await contactAt("VLTFLS", VLTFLS)).connect(deployer)
+    //const _VLTFLS = await deploy("VLTFLS", [adrs.appProvider, adrs.weth])
+    await chargeC(VLTFLS, toEther(0.111))
+    await depositWETH(toEther(0.111), adrs.weth, VLTFLS)
+    await approve(VLTFLS, toEther(20), adrs.weth)
+    await _VLTFLS.start(adrs.weth, toEther(2), { gasLimit: 30000000 })
 
-    const dep = await deploy("Vur")
-    const minAmt = 0.1
-    await ckblnc(deployer.address)
+    return
 
-    const balanceD = await balanceOfETH(deployer.address)
-    if (balanceD.lt(toEther(minAmt))) {
-        throw new Error("Deployer balance is too low")
+    const _PY = contactAt("PY", PY)
+
+    const setDDs = async () => {
+        const _DDSPF = contactAt("DDSPF", DDSPF)
+        await chargeC(DDSPF, minETH)
+        const _ddsCache = (await _DDSPF).connect(deployer)
+        await _ddsCache.build(deployer.address)
+        const ddsCache = await _ddsCache.getProxy(deployer.address)
+        logg.success("DDS Cache: ", ddsCache)
+        return ddsCache
     }
 
-    const weth  = await getWETH(aAdrs("weth"))
+    await setDDs()
+
+    yemo vur 
+    const _yemoVur = await deploy("YemoVur", [
+        deployer.address,
+        adrsb,
+        adrs.weth,
+        adrs.appProvider,
+        VLTFLS,  
+    ])
+    await chargeC(_yemoVur.address, minETH)
+    await _yemoVur.contract.init({ gasLimit: 30000000 })
+
+    */
 }
 
-yemoVur().catch((error) => {
-    console.error(error)
-    process.exitCode = 1
-})
+;(async () => {
+    const [deployer, player] = await ethers.getSigners()
+    await qucickSetup()
+    // await qucickSetup(deployer.address)
+    //  await setup("0xf52dbD4300950fB5139becF10F81e94F37cE9074")
+})()

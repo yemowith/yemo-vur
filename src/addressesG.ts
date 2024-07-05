@@ -6,7 +6,7 @@ const adrs: Adrs = {
     appProvider: "0xa97684ead0e402dc232d5a977953df7ecbab3cdb",
     swapRouter: "0xe592427a0aece92de3edee1f18e0157c05861564",
     appInsta: "0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb",
-    weth: "0x4200000000000000000000000000000000000006",
+    weth: "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
 }
 
 export interface Adrs {
@@ -24,7 +24,7 @@ const dlprA = async () => {
 
 const wethA = async () => {
     const [deployer, player] = await ethers.getSigners()
-    return await await (await ethers.getContractAt("ADRSB", adrsb)).connect(deployer).gAdrs("weth")
+    return await (await ethers.getContractAt("ADRSB", adrsb)).connect(deployer).gAdrs("weth")
 }
 
 export { adrsb, aAdrs, adrs as adrsG, dlprA, wethA }

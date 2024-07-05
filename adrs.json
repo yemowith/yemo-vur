@@ -5,7 +5,7 @@
         "polygun": "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6"
     },
     "WETH": {
-        "base": "0x4200000000000000000000000000000000000006",
+        "base": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
         "mainnet": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
         "polygun": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"
     },
@@ -13,6 +13,12 @@
         "polygun": "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
         "mainnet": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
         "base": "0x4200000000000000000000000000000000000006",
+        "fantom": "0x04068da6c83afcfa0e13ba15a6696662335d5b75"
+    },
+    "USDT": {
+        "polygun": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "mainnet": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "base": "0x420000000000000000000000000000000000006",
         "fantom": "0x04068da6c83afcfa0e13ba15a6696662335d5b75"
     },
     "addressProvider": {

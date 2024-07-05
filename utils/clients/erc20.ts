@@ -3,7 +3,7 @@ import { fromEther } from "../tools"
 import { BigNumber } from "ethers"
 import { logg } from "../core/logger"
 
-const IERC20 = "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20"
+const IERC20 = "@aave/core-v3/contracts/dependencies/openzeppelin/contracts/IERC20.sol:IERC20"
 
 const balanceOf = async (address: string, token: string): Promise<any> => {
     const tokenContract = await ethers.getContractAt(IERC20, token)

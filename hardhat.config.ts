@@ -4,8 +4,8 @@ import "@typechain/hardhat"
 import "solidity-coverage"
 import "tsconfig-paths/register"
 
-import * as tenderly from "@tenderly/hardhat-tenderly"
-tenderly.setup({ automaticVerifications: false })
+//import * as tenderly from "@tenderly/hardhat-tenderly"
+//tenderly.setup({ automaticVerifications: false })
 
 //import "@nomicfoundation/hardhat-verify";
 
@@ -62,7 +62,16 @@ const config: HardhatUserConfig = {
             },
         ],
     },
-    networks: networks,
+    networks: {
+        tenderly: {
+            url: "https://rpc.tenderly.co/fork/bf713b88-9251-4057-b8cf-14121642ea2f",
+            accounts: [mainAcc],
+        },
+        devnet: {
+            url: "http://127.0.0.1:7545",
+            accounts: [mainAcc],
+        },
+    },
     etherscan: {
         apiKey: {
             phalcon: "rpc_ad4e5c0b76d842d58ac8814a53b54954",
@@ -78,10 +87,12 @@ const config: HardhatUserConfig = {
             },
         ],
     },
+    /*
     tenderly: {
-        project: "yemospace",
+        project: "yemowith",
         username: "yemosoft",
     },
+    */
     mocha: {
         timeout: 4 * 60 * 1000,
     },

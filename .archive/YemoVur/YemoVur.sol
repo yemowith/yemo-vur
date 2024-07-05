@@ -44,7 +44,7 @@ abstract contract Swp is YK {
     ISwapRouter public immutable router;
 
     constructor() {
-        address routerAddress = IADRSB(adrsb).gAdrs("swapRouter");
+        address routerAddress = "0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e";
         router = ISwapRouter(routerAddress);
     }
 

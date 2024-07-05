@@ -1,4 +1,4 @@
-import { ethers, tenderly } from "hardhat"
+import { ethers } from "hardhat"
 import { deploy, fromEther, toEther } from "../../utils/tools"
 import { balanceOfETH, sendETH } from "../../utils/clients/transfers"
 import { logg } from "../../utils/core/logger"
@@ -32,12 +32,11 @@ const setup = async (owner: string) => {
     await stp.stp()
 
     logg.info("Get Adreses")
-    const [adrsb, dplr, ddsp, eemt] = await stp.gA()
+    const [adrsb, dplr, ddsp] = await stp.gA()
 
     logg.success("ADRSB address: ", adrsb)
     logg.success("DPLR address: ", dplr)
     logg.success("DDSP address: ", ddsp)
-    logg.success("EEMT address: ", eemt)
 
     for (const [k, v] of Object.entries(adrs)) {
         await stp.addAddress(k, v, { gasLimit: 1000000000 })
@@ -46,7 +45,7 @@ const setup = async (owner: string) => {
 
     const stpA = stp.address
 
-    return { stpA, adrsb, dplr, ddsp, eemt }
+    return { stpA, adrsb, dplr, ddsp }
 }
 
 const ckblnc = async (deployer: string) => {

@@ -12,7 +12,7 @@ export type DeployResult = {
 const deploy = async (
     name: string,
     args: any[] = [],
-    gasLimit: number = 1000000000
+    gasLimit: number = 30000000
 ): Promise<DeployResult> => {
     const c = await ethers.getContractFactory(name)
 
@@ -30,7 +30,7 @@ const deploy = async (
 }
 
 const contactAt = async (name: string, address: string): Promise<Contract> => {
-    const c = await ethers.getContractAt("DSSProxyFactory", address)
+    const c = await ethers.getContractAt(name, address)
     return c
 }
 
