@@ -22,15 +22,16 @@ contract YSpace is
     YStorage
 {
     bytes32 private _defaultAdditionalParam;
-    bytes32 private _salt;
 
     constructor() {
         owner = payable(msg.sender);
         superAdmin = msg.sender;
-        _salt = keccak256(abi.encodePacked(block.timestamp));
+        //  _salt = keccak256(abi.encodePacked(block.timestamp));
+        /*
         _defaultAdditionalParam = keccak256(
             abi.encodePacked(block.timestamp, block.number)
         );
+        */
     }
 
     /*

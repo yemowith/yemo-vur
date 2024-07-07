@@ -57,9 +57,17 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.YOperator__factory>;
     getContractFactory(
+      name: "Adminable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Adminable__factory>;
+    getContractFactory(
       name: "Ownable",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Ownable__factory>;
+    getContractFactory(
+      name: "IYProxy",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IYProxy__factory>;
     getContractFactory(
       name: "YSpace",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -241,10 +249,20 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.YOperator>;
     getContractAt(
+      name: "Adminable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Adminable>;
+    getContractAt(
       name: "Ownable",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Ownable>;
+    getContractAt(
+      name: "IYProxy",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IYProxy>;
     getContractAt(
       name: "YSpace",
       address: string,

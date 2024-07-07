@@ -1,14 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract ETHLocker is Ownable {
+contract ERC20Locker is Ownable {
     struct Lock {
         uint256 amount;
         uint256 unlockTime;
     }
 
+    IERC20 public token;
     mapping(address => Lock) public locks;
 
     event Locked(address indexed user, uint256 amount, uint256 unlockTime);
@@ -16,30 +18,40 @@ contract ETHLocker is Ownable {
     event EmergencyUnlock(address indexed user, uint256 amount);
 
     modifier onlyLocked(address user) {
-        require(locks[user].amount > 0, "No ETH locked");
+        require(locks[user].amount > 0, "No tokens locked");
         _;
     }
 
     modifier notLocked(address user) {
-        require(locks[user].amount == 0, "ETH already locked");
+        require(locks[user].amount == 0, "Tokens already locked");
         _;
     }
 
-    constructor() Ownable(msg.sender) {}
+    constructor(address _token) Ownable(msg.sender) {
+        require(_token != address(0), "Invalid token address");
+        token = IERC20(_token);
+    }
 
-    function lockETH(uint256 lockTime) external payable notLocked(msg.sender) {
-        require(msg.value > 0, "Amount must be greater than 0");
+    function lockTokens(
+        uint256 amount,
+        uint256 lockTime
+    ) external notLocked(msg.sender) {
+        require(amount > 0, "Amount must be greater than 0");
         require(lockTime > 0, "Lock time must be greater than 0");
+        require(
+            token.transferFrom(msg.sender, address(this), amount),
+            "Token transfer failed"
+        );
 
         locks[msg.sender] = Lock({
-            amount: msg.value,
+            amount: amount,
             unlockTime: block.timestamp + lockTime
         });
 
-        emit Locked(msg.sender, msg.value, locks[msg.sender].unlockTime);
+        emit Locked(msg.sender, amount, locks[msg.sender].unlockTime);
     }
 
-    function unlockETH() external onlyLocked(msg.sender) {
+    function unlockTokens() external onlyLocked(msg.sender) {
         require(
             block.timestamp >= locks[msg.sender].unlockTime,
             "Lock period not yet expired"
@@ -49,8 +61,7 @@ contract ETHLocker is Ownable {
         locks[msg.sender].amount = 0;
         locks[msg.sender].unlockTime = 0;
 
-        (bool success, ) = msg.sender.call{value: amount}("");
-        require(success, "ETH transfer failed");
+        require(token.transfer(msg.sender, amount), "Token transfer failed");
 
         emit Unlocked(msg.sender, amount);
     }
@@ -74,8 +85,7 @@ contract ETHLocker is Ownable {
         locks[user].amount = 0;
         locks[user].unlockTime = 0;
 
-        (bool success, ) = user.call{value: amount}("");
-        require(success, "ETH transfer failed");
+        require(token.transfer(user, amount), "Token transfer failed");
 
         emit EmergencyUnlock(user, amount);
     }
@@ -86,7 +96,4 @@ contract ETHLocker is Ownable {
         Lock storage lock = locks[user];
         return (lock.amount, lock.unlockTime);
     }
-
-    // Fallback function to accept ETH
-    receive() external payable {}
 }

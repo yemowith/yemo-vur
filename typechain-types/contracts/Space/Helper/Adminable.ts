@@ -24,18 +24,22 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../common";
+} from "../../../common";
 
-export interface YStorageInterface extends utils.Interface {
+export interface AdminableInterface extends utils.Interface {
   functions: {
     "changeOwner(address)": FunctionFragment;
-    "getData(string)": FunctionFragment;
+    "changeSuperAdmin(address)": FunctionFragment;
     "owner()": FunctionFragment;
-    "setData(string,bytes)": FunctionFragment;
+    "superAdmin()": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "changeOwner" | "getData" | "owner" | "setData"
+    nameOrSignatureOrTopic:
+      | "changeOwner"
+      | "changeSuperAdmin"
+      | "owner"
+      | "superAdmin"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -43,28 +47,33 @@ export interface YStorageInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getData",
+    functionFragment: "changeSuperAdmin",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "setData",
-    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
+    functionFragment: "superAdmin",
+    values?: undefined
   ): string;
 
   decodeFunctionResult(
     functionFragment: "changeOwner",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "getData", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "changeSuperAdmin",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setData", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "superAdmin", data: BytesLike): Result;
 
   events: {
     "OwnerChanged(address,address)": EventFragment;
+    "SuperAdminChanged(address,address)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SuperAdminChanged"): EventFragment;
 }
 
 export interface OwnerChangedEventObject {
@@ -78,12 +87,24 @@ export type OwnerChangedEvent = TypedEvent<
 
 export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
 
-export interface YStorage extends BaseContract {
+export interface SuperAdminChangedEventObject {
+  oldSuperAdmin: string;
+  newSuperAdmin: string;
+}
+export type SuperAdminChangedEvent = TypedEvent<
+  [string, string],
+  SuperAdminChangedEventObject
+>;
+
+export type SuperAdminChangedEventFilter =
+  TypedEventFilter<SuperAdminChangedEvent>;
+
+export interface Adminable extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: YStorageInterface;
+  interface: AdminableInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -110,18 +131,14 @@ export interface YStorage extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    getData(
-      key: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    changeSuperAdmin(
+      newSuperAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    setData(
-      key: PromiseOrValue<string>,
-      value: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    superAdmin(overrides?: CallOverrides): Promise<[string]>;
   };
 
   changeOwner(
@@ -129,18 +146,14 @@ export interface YStorage extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  getData(
-    key: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  changeSuperAdmin(
+    newSuperAdmin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  setData(
-    key: PromiseOrValue<string>,
-    value: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  superAdmin(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     changeOwner(
@@ -148,18 +161,14 @@ export interface YStorage extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    getData(
-      key: PromiseOrValue<string>,
+    changeSuperAdmin(
+      newSuperAdmin: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<string>;
+    ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    setData(
-      key: PromiseOrValue<string>,
-      value: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    superAdmin(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -171,6 +180,15 @@ export interface YStorage extends BaseContract {
       oldOwner?: PromiseOrValue<string> | null,
       newOwner?: PromiseOrValue<string> | null
     ): OwnerChangedEventFilter;
+
+    "SuperAdminChanged(address,address)"(
+      oldSuperAdmin?: PromiseOrValue<string> | null,
+      newSuperAdmin?: PromiseOrValue<string> | null
+    ): SuperAdminChangedEventFilter;
+    SuperAdminChanged(
+      oldSuperAdmin?: PromiseOrValue<string> | null,
+      newSuperAdmin?: PromiseOrValue<string> | null
+    ): SuperAdminChangedEventFilter;
   };
 
   estimateGas: {
@@ -179,18 +197,14 @@ export interface YStorage extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    getData(
-      key: PromiseOrValue<string>,
-      overrides?: CallOverrides
+    changeSuperAdmin(
+      newSuperAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setData(
-      key: PromiseOrValue<string>,
-      value: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    superAdmin(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -199,17 +213,13 @@ export interface YStorage extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    getData(
-      key: PromiseOrValue<string>,
-      overrides?: CallOverrides
+    changeSuperAdmin(
+      newSuperAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    setData(
-      key: PromiseOrValue<string>,
-      value: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    superAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

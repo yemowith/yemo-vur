@@ -28,10 +28,14 @@ export type { IUniswapV2Router02 } from "./@uniswap/v2-periphery/contracts/inter
 export { IUniswapV2Router02__factory } from "./factories/@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02__factory";
 export type { YOperator } from "./contracts/Operator/YOperator";
 export { YOperator__factory } from "./factories/contracts/Operator/YOperator__factory";
+export type { Adminable } from "./contracts/Space/Helper/Adminable";
+export { Adminable__factory } from "./factories/contracts/Space/Helper/Adminable__factory";
 export type { Ownable } from "./contracts/Space/Helper/Ownable";
 export { Ownable__factory } from "./factories/contracts/Space/Helper/Ownable__factory";
-export type { YSpace } from "./contracts/Space/YSpace";
-export { YSpace__factory } from "./factories/contracts/Space/YSpace__factory";
+export type { IYProxy } from "./contracts/Space/YSpace.sol/IYProxy";
+export { IYProxy__factory } from "./factories/contracts/Space/YSpace.sol/IYProxy__factory";
+export type { YSpace } from "./contracts/Space/YSpace.sol/YSpace";
+export { YSpace__factory } from "./factories/contracts/Space/YSpace.sol/YSpace__factory";
 export type { IYAddressBook } from "./contracts/Space/YTools/YAddressBook.sol/IYAddressBook";
 export { IYAddressBook__factory } from "./factories/contracts/Space/YTools/YAddressBook.sol/IYAddressBook__factory";
 export type { YAddressBook } from "./contracts/Space/YTools/YAddressBook.sol/YAddressBook";
@@ -48,8 +52,6 @@ export type { IYExecutor } from "./contracts/Space/YTools/YExecutor.sol/IYExecut
 export { IYExecutor__factory } from "./factories/contracts/Space/YTools/YExecutor.sol/IYExecutor__factory";
 export type { YExecutor } from "./contracts/Space/YTools/YExecutor.sol/YExecutor";
 export { YExecutor__factory } from "./factories/contracts/Space/YTools/YExecutor.sol/YExecutor__factory";
-export type { IYProxy } from "./contracts/Space/YTools/YProxy.sol/IYProxy";
-export { IYProxy__factory } from "./factories/contracts/Space/YTools/YProxy.sol/IYProxy__factory";
 export type { YProxy } from "./contracts/Space/YTools/YProxy.sol/YProxy";
 export { YProxy__factory } from "./factories/contracts/Space/YTools/YProxy.sol/YProxy__factory";
 export type { IYStorage } from "./contracts/Space/YTools/YStorage.sol/IYStorage";

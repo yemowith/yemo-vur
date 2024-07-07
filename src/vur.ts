@@ -92,7 +92,7 @@ async function yemoVur() {
 
 ;(async () => {
     const [deployer, player] = await ethers.getSigners()
-    await qucickSetup()
+    await makeYSpace()
     // await qucickSetup(deployer.address)
     //  await setup("0xf52dbD4300950fB5139becF10F81e94F37cE9074")
 })()
