@@ -84,6 +84,14 @@ const getChainId = async () => {
     return { chainIdStr, chainIdBN }
 }
 
+const fromWeiToEther = (wei: BigNumber): string => {
+    return ethers.utils.formatEther(wei)
+}
+
+const toWeiFromEther = (ether: string): BigNumber => {
+    return ethers.utils.parseEther(ether)
+}
+
 export {
     deploy,
     verify,
@@ -93,4 +101,6 @@ export {
     maxApproveAmount,
     getChainId,
     contactAt,
+    fromWeiToEther,
+    toWeiFromEther,
 }

@@ -12,4 +12,4 @@ export * as swapper from "./Swapper";
 export * as vault from "./Vault";
 export * as wallets from "./Wallets";
 export * as wrappedToken from "./WrappedToken";
-export { MultiSigWallet__factory } from "./MultiSigWallet__factory";
+export { YKitFactory__factory } from "./YKitFactory__factory";

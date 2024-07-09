@@ -43,18 +43,7 @@ contract CustomPausable {
     }
 }
 
-contract CustomReentrancyGuard {
-    bool private _locked;
-
-    modifier nonReentrant() {
-        require(!_locked, "ReentrancyGuard: reentrant call");
-        _locked = true;
-        _;
-        _locked = false;
-    }
-}
-
-contract StakingContract is Ownable, CustomPausable, CustomReentrancyGuard {
+contract StakingContract is Ownable, CustomPausable {
     IERC20 public stakingToken;
 
     enum StakingPeriod {
@@ -97,9 +86,12 @@ contract StakingContract is Ownable, CustomPausable, CustomReentrancyGuard {
     function stake(
         uint256 amount,
         StakingPeriod period
-    ) external whenNotPaused nonReentrant {
+    ) external whenNotPaused {
         require(amount > 0, "Amount must be greater than 0");
         require(!stakes[msg.sender].staked, "Already staked");
+
+        uint256 allowance = stakingToken.allowance(msg.sender, address(this));
+        require(allowance >= amount, "Check the token allowance");
 
         require(
             stakingToken.transferFrom(msg.sender, address(this), amount),
@@ -116,7 +108,7 @@ contract StakingContract is Ownable, CustomPausable, CustomReentrancyGuard {
         emit Staked(msg.sender, amount, period);
     }
 
-    function unstake() external whenNotPaused nonReentrant {
+    function unstake() external whenNotPaused {
         Stake storage userStake = stakes[msg.sender];
         require(userStake.staked, "No active stake");
         require(
@@ -140,7 +132,7 @@ contract StakingContract is Ownable, CustomPausable, CustomReentrancyGuard {
         emit Unstaked(msg.sender, amount);
     }
 
-    function withdrawRewards() external whenNotPaused nonReentrant {
+    function withdrawRewards() external whenNotPaused {
         uint256 reward = rewards[msg.sender];
         require(reward > 0, "No rewards available");
 

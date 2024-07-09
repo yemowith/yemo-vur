@@ -23,4 +23,4 @@ import type * as wallets from "./Wallets";
 export type { wallets };
 import type * as wrappedToken from "./WrappedToken";
 export type { wrappedToken };
-export type { MultiSigWallet } from "./MultiSigWallet";
+export type { YKitFactory } from "./YKitFactory";

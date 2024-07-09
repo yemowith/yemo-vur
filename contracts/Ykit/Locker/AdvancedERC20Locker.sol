@@ -136,7 +136,6 @@ contract AdvancedERC20Locker is Ownable {
         emit PenaltyFeeChanged(newPenaltyFee);
     }
 
-    // Batch lock tokens for multiple addresses
     function batchLockTokens(
         address[] calldata users,
         uint256[] calldata amounts,
@@ -167,7 +166,6 @@ contract AdvancedERC20Locker is Ownable {
         }
     }
 
-    // Batch unlock tokens for multiple addresses
     function batchUnlockTokens(address[] calldata users) external onlyOwner {
         for (uint256 i = 0; i < users.length; i++) {
             address user = users[i];
@@ -187,7 +185,6 @@ contract AdvancedERC20Locker is Ownable {
         }
     }
 
-    // Automatically unlock tokens for a specific user if the unlock time has passed
     function autoUnlock(address user) external {
         require(
             block.timestamp >= locks[user].unlockTime,

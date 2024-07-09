@@ -4,18 +4,20 @@ import "@typechain/hardhat"
 import "solidity-coverage"
 import "tsconfig-paths/register"
 
-import * as tenderly from "@tenderly/hardhat-tenderly"
-tenderly.setup({ automaticVerifications: true })
+//import * as tenderly from "@tenderly/hardhat-tenderly"
+//tenderly.setup({ automaticVerifications: true })
 
 //import "@nomicfoundation/hardhat-verify";
 
 import * as dotenv from "dotenv"
+dotenv.config()
 import { makeNetworkHardhat } from "./utils/stores/networksStore"
 import { HardhatNetworkUserConfig, NetworksUserConfig } from "hardhat/types"
 import { toEther } from "@utils/tools"
 
-dotenv.config()
-const mainAcc = process.env.PRIVATE_KEY as string
+const ownerWallet = process.env.OWNER_PRIVATE_KEY as string
+const userWallet = process.env.USER_PRIVATE_KEY as string
+const gamerWallet = process.env.GAMER_PRIVATE_KEY as string
 
 const networks: NetworksUserConfig = {
     ...makeNetworkHardhat(),
@@ -63,13 +65,13 @@ const config: HardhatUserConfig = {
         ],
     },
     networks: {
-        virtual_polygon: {
-            url: "https://virtual.polygon.rpc.tenderly.co/1b876892-6239-4f56-bc14-615d4364564d",
-            chainId: 137,
+        tenderly: {
+            url: "https://rpc.tenderly.co/fork/bf713b88-9251-4057-b8cf-14121642ea2f",
+            accounts: [ownerWallet, userWallet, gamerWallet],
         },
         devnet: {
             url: "http://127.0.0.1:7545",
-            accounts: [mainAcc],
+            accounts: [ownerWallet, userWallet, gamerWallet],
         },
     },
     etherscan: {

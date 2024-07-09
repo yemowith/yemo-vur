@@ -56,8 +56,14 @@ contract AdvancedEscrow is ERC721, Ownable, CustomReentrancyGuard {
     function deposit(
         uint256 amount,
         string memory metadata
-    ) external nonReentrant {
+    ) external nonReentrant returns (uint256) {
         require(amount >= minDepositAmount, "Amount below minimum deposit");
+
+        // Check if the contract has enough allowance to transfer the tokens
+        uint256 allowance = depositToken.allowance(msg.sender, address(this));
+        require(allowance >= amount, "Check the token allowance");
+
+        // Transfer tokens from the user to the contract
         require(
             depositToken.transferFrom(msg.sender, address(this), amount),
             "Token transfer failed"
@@ -72,6 +78,8 @@ contract AdvancedEscrow is ERC721, Ownable, CustomReentrancyGuard {
         userDeposits[msg.sender] += amount;
 
         emit Deposited(msg.sender, tokenId, amount);
+
+        return tokenId;
     }
 
     function redeem(uint256 tokenId) external nonReentrant {
@@ -81,6 +89,12 @@ contract AdvancedEscrow is ERC721, Ownable, CustomReentrancyGuard {
         require(item.owner == msg.sender, "Not the original depositor");
 
         uint256 amount = item.amount;
+
+        // Approve the contract to transfer tokens back to the user
+        require(
+            depositToken.approve(address(this), amount),
+            "Token approve failed"
+        );
         require(
             depositToken.transfer(msg.sender, amount),
             "Token transfer failed"

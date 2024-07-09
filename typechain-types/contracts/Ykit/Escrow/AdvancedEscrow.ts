@@ -661,7 +661,7 @@ export interface AdvancedEscrow extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       metadata: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<BigNumber>;
 
     depositToken(overrides?: CallOverrides): Promise<string>;
 

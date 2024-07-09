@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { MultiSigWallet } from "./MultiSigWallet";
+export type { OffChainMultiSigWallet } from "./OffChainMultiSigWallet";

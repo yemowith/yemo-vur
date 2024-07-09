@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./base/ERC20SwapperVault.sol";
+import "./base/ERC20SwapVault.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract SimpleSwapper is Ownable {
-    ERC20Vault public vault;
+    ERC20SwapVault public vault;
     uint256 public exchangeRate; // Exchange rate from baseToken to quoteToken (e.g., 1 baseToken = X quoteToken)
 
     event Swapped(
@@ -17,7 +18,7 @@ contract SimpleSwapper is Ownable {
     constructor(address _vault, uint256 _exchangeRate) Ownable(msg.sender) {
         require(_vault != address(0), "Invalid vault address");
         require(_exchangeRate > 0, "Invalid exchange rate");
-        vault = ERC20Vault(_vault);
+        vault = ERC20SwapVault(_vault);
         exchangeRate = _exchangeRate;
     }
 

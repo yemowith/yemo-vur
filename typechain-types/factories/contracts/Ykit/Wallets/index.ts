@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { MultiSigWallet__factory } from "./MultiSigWallet__factory";
+export { OffChainMultiSigWallet__factory } from "./OffChainMultiSigWallet__factory";

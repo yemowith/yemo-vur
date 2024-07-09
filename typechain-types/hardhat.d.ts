@@ -57,6 +57,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC20__factory>;
     getContractFactory(
+      name: "ERC20Burnable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC20Burnable__factory>;
+    getContractFactory(
+      name: "ERC20Pausable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC20Pausable__factory>;
+    getContractFactory(
       name: "IERC20Metadata",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC20Metadata__factory>;
@@ -101,6 +109,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Math__factory>;
     getContractFactory(
+      name: "Pausable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Pausable__factory>;
+    getContractFactory(
       name: "ReentrancyGuard",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ReentrancyGuard__factory>;
@@ -132,6 +144,14 @@ declare module "hardhat/types/runtime" {
       name: "IUniswapV2Router02",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IUniswapV2Router02__factory>;
+    getContractFactory(
+      name: "ERC20Token",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC20Token__factory>;
+    getContractFactory(
+      name: "MockFactory",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.MockFactory__factory>;
     getContractFactory(
       name: "Adminable",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -201,22 +221,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.YBaseVault__factory>;
     getContractFactory(
-      name: "IVLTFLS",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IVLTFLS__factory>;
-    getContractFactory(
-      name: "IWETH2",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IWETH2__factory>;
-    getContractFactory(
-      name: "VLTFLS",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.VLTFLS__factory>;
-    getContractFactory(
-      name: "YF",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.YF__factory>;
-    getContractFactory(
       name: "ContractFactory",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ContractFactory__factory>;
@@ -236,6 +240,10 @@ declare module "hardhat/types/runtime" {
       name: "DDSPCch",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.DDSPCch__factory>;
+    getContractFactory(
+      name: "DDSPF",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.DDSPF__factory>;
     getContractFactory(
       name: "DSAth",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -257,13 +265,25 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IDDSP__factory>;
     getContractFactory(
-      name: "ProxyRegistry",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ProxyRegistry__factory>;
-    getContractFactory(
       name: "AdvancedEscrow",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.AdvancedEscrow__factory>;
+    getContractFactory(
+      name: "FlashLoanManager",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.FlashLoanManager__factory>;
+    getContractFactory(
+      name: "FlashLoanReceiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.FlashLoanReceiver__factory>;
+    getContractFactory(
+      name: "IFlashLoan",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IFlashLoan__factory>;
+    getContractFactory(
+      name: "IWETH",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IWETH__factory>;
     getContractFactory(
       name: "IERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -289,10 +309,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ETHLocker__factory>;
     getContractFactory(
-      name: "MultiSigWallet",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.MultiSigWallet__factory>;
-    getContractFactory(
       name: "YOperator",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.YOperator__factory>;
@@ -313,6 +329,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SimpleSwapper__factory>;
     getContractFactory(
+      name: "YSwapper",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.YSwapper__factory>;
+    getContractFactory(
       name: "SimpleVault",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SimpleVault__factory>;
@@ -321,13 +341,17 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MultiSigWallet__factory>;
     getContractFactory(
+      name: "OffChainMultiSigWallet",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.OffChainMultiSigWallet__factory>;
+    getContractFactory(
       name: "WrappedToken",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.WrappedToken__factory>;
     getContractFactory(
-      name: "YSwapper",
+      name: "YKitFactory",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.YSwapper__factory>;
+    ): Promise<Contracts.YKitFactory__factory>;
 
     getContractAt(
       name: "IERC20",
@@ -385,6 +409,16 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ERC20>;
     getContractAt(
+      name: "ERC20Burnable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC20Burnable>;
+    getContractAt(
+      name: "ERC20Pausable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC20Pausable>;
+    getContractAt(
       name: "IERC20Metadata",
       address: string,
       signer?: ethers.Signer
@@ -440,6 +474,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.Math>;
     getContractAt(
+      name: "Pausable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Pausable>;
+    getContractAt(
       name: "ReentrancyGuard",
       address: string,
       signer?: ethers.Signer
@@ -479,6 +518,16 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IUniswapV2Router02>;
+    getContractAt(
+      name: "ERC20Token",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC20Token>;
+    getContractAt(
+      name: "MockFactory",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.MockFactory>;
     getContractAt(
       name: "Adminable",
       address: string,
@@ -565,26 +614,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.YBaseVault>;
     getContractAt(
-      name: "IVLTFLS",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IVLTFLS>;
-    getContractAt(
-      name: "IWETH2",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IWETH2>;
-    getContractAt(
-      name: "VLTFLS",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.VLTFLS>;
-    getContractAt(
-      name: "YF",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.YF>;
-    getContractAt(
       name: "ContractFactory",
       address: string,
       signer?: ethers.Signer
@@ -609,6 +638,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.DDSPCch>;
+    getContractAt(
+      name: "DDSPF",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.DDSPF>;
     getContractAt(
       name: "DSAth",
       address: string,
@@ -635,15 +669,30 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IDDSP>;
     getContractAt(
-      name: "ProxyRegistry",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ProxyRegistry>;
-    getContractAt(
       name: "AdvancedEscrow",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.AdvancedEscrow>;
+    getContractAt(
+      name: "FlashLoanManager",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.FlashLoanManager>;
+    getContractAt(
+      name: "FlashLoanReceiver",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.FlashLoanReceiver>;
+    getContractAt(
+      name: "IFlashLoan",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IFlashLoan>;
+    getContractAt(
+      name: "IWETH",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IWETH>;
     getContractAt(
       name: "IERC20",
       address: string,
@@ -675,11 +724,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ETHLocker>;
     getContractAt(
-      name: "MultiSigWallet",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.MultiSigWallet>;
-    getContractAt(
       name: "YOperator",
       address: string,
       signer?: ethers.Signer
@@ -705,6 +749,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.SimpleSwapper>;
     getContractAt(
+      name: "YSwapper",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.YSwapper>;
+    getContractAt(
       name: "SimpleVault",
       address: string,
       signer?: ethers.Signer
@@ -715,15 +764,20 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.MultiSigWallet>;
     getContractAt(
+      name: "OffChainMultiSigWallet",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.OffChainMultiSigWallet>;
+    getContractAt(
       name: "WrappedToken",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.WrappedToken>;
     getContractAt(
-      name: "YSwapper",
+      name: "YKitFactory",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.YSwapper>;
+    ): Promise<Contracts.YKitFactory>;
 
     // default types
     getContractFactory(
