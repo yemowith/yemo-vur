@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Vault is Ownable {
+contract SimpleVault is Ownable {
     IERC20 public asset;
     mapping(address => uint256) public deposits;
     mapping(address => uint256) public borrows;

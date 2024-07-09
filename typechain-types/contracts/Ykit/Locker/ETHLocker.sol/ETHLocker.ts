@@ -30,124 +30,141 @@ import type {
 
 export interface ETHLockerInterface extends utils.Interface {
   functions: {
-    "canWithdraw(uint256)": FunctionFragment;
-    "configureDeposit(uint256,int256)": FunctionFragment;
-    "deposit(uint256)": FunctionFragment;
-    "deposits(uint256)": FunctionFragment;
-    "getETHPrice()": FunctionFragment;
-    "increaseLockForDays(uint256,uint256)": FunctionFragment;
-    "increaseMinExpectedPrice(int256,uint256)": FunctionFragment;
-    "lockerPass()": FunctionFragment;
-    "withdraw(uint256)": FunctionFragment;
+    "emergencyUnlock(address)": FunctionFragment;
+    "extendLock(uint256)": FunctionFragment;
+    "getLockInfo(address)": FunctionFragment;
+    "lockETH(uint256)": FunctionFragment;
+    "locks(address)": FunctionFragment;
+    "owner()": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
+    "unlockETH()": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "canWithdraw"
-      | "configureDeposit"
-      | "deposit"
-      | "deposits"
-      | "getETHPrice"
-      | "increaseLockForDays"
-      | "increaseMinExpectedPrice"
-      | "lockerPass"
-      | "withdraw"
+      | "emergencyUnlock"
+      | "extendLock"
+      | "getLockInfo"
+      | "lockETH"
+      | "locks"
+      | "owner"
+      | "renounceOwnership"
+      | "transferOwnership"
+      | "unlockETH"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "canWithdraw",
+    functionFragment: "emergencyUnlock",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "extendLock",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "configureDeposit",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: "getLockInfo",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "deposit",
+    functionFragment: "lockETH",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "deposits",
-    values: [PromiseOrValue<BigNumberish>]
+    functionFragment: "locks",
+    values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "getETHPrice",
+    functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "increaseLockForDays",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: "transferOwnership",
+    values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "increaseMinExpectedPrice",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lockerPass",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdraw",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
+  encodeFunctionData(functionFragment: "unlockETH", values?: undefined): string;
 
   decodeFunctionResult(
-    functionFragment: "canWithdraw",
+    functionFragment: "emergencyUnlock",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "extendLock", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getLockInfo",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "lockETH", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "locks", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "configureDeposit",
+    functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "deposits", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getETHPrice",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "increaseLockForDays",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "increaseMinExpectedPrice",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "lockerPass", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "unlockETH", data: BytesLike): Result;
 
   events: {
-    "Deposit(address,uint256,uint256)": EventFragment;
-    "Withdrawal(address,uint256,uint256)": EventFragment;
+    "EmergencyUnlock(address,uint256)": EventFragment;
+    "Locked(address,uint256,uint256)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
+    "Unlocked(address,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Withdrawal"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "EmergencyUnlock"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Locked"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Unlocked"): EventFragment;
 }
 
-export interface DepositEventObject {
-  by: string;
-  depositId: BigNumber;
+export interface EmergencyUnlockEventObject {
+  user: string;
   amount: BigNumber;
 }
-export type DepositEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  DepositEventObject
+export type EmergencyUnlockEvent = TypedEvent<
+  [string, BigNumber],
+  EmergencyUnlockEventObject
 >;
 
-export type DepositEventFilter = TypedEventFilter<DepositEvent>;
+export type EmergencyUnlockEventFilter = TypedEventFilter<EmergencyUnlockEvent>;
 
-export interface WithdrawalEventObject {
-  by: string;
-  depositId: BigNumber;
+export interface LockedEventObject {
+  user: string;
+  amount: BigNumber;
+  unlockTime: BigNumber;
+}
+export type LockedEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  LockedEventObject
+>;
+
+export type LockedEventFilter = TypedEventFilter<LockedEvent>;
+
+export interface OwnershipTransferredEventObject {
+  previousOwner: string;
+  newOwner: string;
+}
+export type OwnershipTransferredEvent = TypedEvent<
+  [string, string],
+  OwnershipTransferredEventObject
+>;
+
+export type OwnershipTransferredEventFilter =
+  TypedEventFilter<OwnershipTransferredEvent>;
+
+export interface UnlockedEventObject {
+  user: string;
   amount: BigNumber;
 }
-export type WithdrawalEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  WithdrawalEventObject
+export type UnlockedEvent = TypedEvent<
+  [string, BigNumber],
+  UnlockedEventObject
 >;
 
-export type WithdrawalEventFilter = TypedEventFilter<WithdrawalEvent>;
+export type UnlockedEventFilter = TypedEventFilter<UnlockedEvent>;
 
 export interface ETHLocker extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -176,264 +193,257 @@ export interface ETHLocker extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    canWithdraw(
-      _depositId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    configureDeposit(
-      _lockForDays: PromiseOrValue<BigNumberish>,
-      _minExpectedPrice: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    emergencyUnlock(
+      user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    deposit(
-      _depositId: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    extendLock(
+      additionalTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    deposits(
-      arg0: PromiseOrValue<BigNumberish>,
+    getLockInfo(
+      user: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber] & {
-        lockForDays: BigNumber;
-        createdAt: BigNumber;
-        minExpectedPrice: BigNumber;
-        balance: BigNumber;
-      }
+      [BigNumber, BigNumber] & { amount: BigNumber; unlockTime: BigNumber }
     >;
 
-    getETHPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
+    lockETH(
+      lockTime: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
-    increaseLockForDays(
-      _newLockForDays: PromiseOrValue<BigNumberish>,
-      _depositId: PromiseOrValue<BigNumberish>,
+    locks(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & { amount: BigNumber; unlockTime: BigNumber }
+    >;
+
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
+    renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    increaseMinExpectedPrice(
-      _newMinExpectedPrice: PromiseOrValue<BigNumberish>,
-      _depositId: PromiseOrValue<BigNumberish>,
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    lockerPass(overrides?: CallOverrides): Promise<[string]>;
-
-    withdraw(
-      _depositId: PromiseOrValue<BigNumberish>,
+    unlockETH(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
-  canWithdraw(
-    _depositId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  configureDeposit(
-    _lockForDays: PromiseOrValue<BigNumberish>,
-    _minExpectedPrice: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  emergencyUnlock(
+    user: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  deposit(
-    _depositId: PromiseOrValue<BigNumberish>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  extendLock(
+    additionalTime: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  deposits(
-    arg0: PromiseOrValue<BigNumberish>,
+  getLockInfo(
+    user: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<
-    [BigNumber, BigNumber, BigNumber, BigNumber] & {
-      lockForDays: BigNumber;
-      createdAt: BigNumber;
-      minExpectedPrice: BigNumber;
-      balance: BigNumber;
-    }
+    [BigNumber, BigNumber] & { amount: BigNumber; unlockTime: BigNumber }
   >;
 
-  getETHPrice(overrides?: CallOverrides): Promise<BigNumber>;
+  lockETH(
+    lockTime: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
-  increaseLockForDays(
-    _newLockForDays: PromiseOrValue<BigNumberish>,
-    _depositId: PromiseOrValue<BigNumberish>,
+  locks(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber] & { amount: BigNumber; unlockTime: BigNumber }
+  >;
+
+  owner(overrides?: CallOverrides): Promise<string>;
+
+  renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  increaseMinExpectedPrice(
-    _newMinExpectedPrice: PromiseOrValue<BigNumberish>,
-    _depositId: PromiseOrValue<BigNumberish>,
+  transferOwnership(
+    newOwner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  lockerPass(overrides?: CallOverrides): Promise<string>;
-
-  withdraw(
-    _depositId: PromiseOrValue<BigNumberish>,
+  unlockETH(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    canWithdraw(
-      _depositId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    configureDeposit(
-      _lockForDays: PromiseOrValue<BigNumberish>,
-      _minExpectedPrice: PromiseOrValue<BigNumberish>,
+    emergencyUnlock(
+      user: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    deposit(
-      _depositId: PromiseOrValue<BigNumberish>,
+    extendLock(
+      additionalTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    deposits(
-      arg0: PromiseOrValue<BigNumberish>,
+    getLockInfo(
+      user: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber] & {
-        lockForDays: BigNumber;
-        createdAt: BigNumber;
-        minExpectedPrice: BigNumber;
-        balance: BigNumber;
-      }
+      [BigNumber, BigNumber] & { amount: BigNumber; unlockTime: BigNumber }
     >;
 
-    getETHPrice(overrides?: CallOverrides): Promise<BigNumber>;
-
-    increaseLockForDays(
-      _newLockForDays: PromiseOrValue<BigNumberish>,
-      _depositId: PromiseOrValue<BigNumberish>,
+    lockETH(
+      lockTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    increaseMinExpectedPrice(
-      _newMinExpectedPrice: PromiseOrValue<BigNumberish>,
-      _depositId: PromiseOrValue<BigNumberish>,
+    locks(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber] & { amount: BigNumber; unlockTime: BigNumber }
+    >;
+
+    owner(overrides?: CallOverrides): Promise<string>;
+
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    lockerPass(overrides?: CallOverrides): Promise<string>;
-
-    withdraw(
-      _depositId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    unlockETH(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    "Deposit(address,uint256,uint256)"(
-      by?: PromiseOrValue<string> | null,
-      depositId?: PromiseOrValue<BigNumberish> | null,
-      amount?: PromiseOrValue<BigNumberish> | null
-    ): DepositEventFilter;
-    Deposit(
-      by?: PromiseOrValue<string> | null,
-      depositId?: PromiseOrValue<BigNumberish> | null,
-      amount?: PromiseOrValue<BigNumberish> | null
-    ): DepositEventFilter;
+    "EmergencyUnlock(address,uint256)"(
+      user?: PromiseOrValue<string> | null,
+      amount?: null
+    ): EmergencyUnlockEventFilter;
+    EmergencyUnlock(
+      user?: PromiseOrValue<string> | null,
+      amount?: null
+    ): EmergencyUnlockEventFilter;
 
-    "Withdrawal(address,uint256,uint256)"(
-      by?: PromiseOrValue<string> | null,
-      depositId?: PromiseOrValue<BigNumberish> | null,
-      amount?: PromiseOrValue<BigNumberish> | null
-    ): WithdrawalEventFilter;
-    Withdrawal(
-      by?: PromiseOrValue<string> | null,
-      depositId?: PromiseOrValue<BigNumberish> | null,
-      amount?: PromiseOrValue<BigNumberish> | null
-    ): WithdrawalEventFilter;
+    "Locked(address,uint256,uint256)"(
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+      unlockTime?: null
+    ): LockedEventFilter;
+    Locked(
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+      unlockTime?: null
+    ): LockedEventFilter;
+
+    "OwnershipTransferred(address,address)"(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
+    ): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
+    ): OwnershipTransferredEventFilter;
+
+    "Unlocked(address,uint256)"(
+      user?: PromiseOrValue<string> | null,
+      amount?: null
+    ): UnlockedEventFilter;
+    Unlocked(
+      user?: PromiseOrValue<string> | null,
+      amount?: null
+    ): UnlockedEventFilter;
   };
 
   estimateGas: {
-    canWithdraw(
-      _depositId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    configureDeposit(
-      _lockForDays: PromiseOrValue<BigNumberish>,
-      _minExpectedPrice: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    deposit(
-      _depositId: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    deposits(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getETHPrice(overrides?: CallOverrides): Promise<BigNumber>;
-
-    increaseLockForDays(
-      _newLockForDays: PromiseOrValue<BigNumberish>,
-      _depositId: PromiseOrValue<BigNumberish>,
+    emergencyUnlock(
+      user: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    increaseMinExpectedPrice(
-      _newMinExpectedPrice: PromiseOrValue<BigNumberish>,
-      _depositId: PromiseOrValue<BigNumberish>,
+    extendLock(
+      additionalTime: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    lockerPass(overrides?: CallOverrides): Promise<BigNumber>;
+    getLockInfo(
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    withdraw(
-      _depositId: PromiseOrValue<BigNumberish>,
+    lockETH(
+      lockTime: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    locks(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    unlockETH(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    canWithdraw(
-      _depositId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    configureDeposit(
-      _lockForDays: PromiseOrValue<BigNumberish>,
-      _minExpectedPrice: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    deposit(
-      _depositId: PromiseOrValue<BigNumberish>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    deposits(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getETHPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    increaseLockForDays(
-      _newLockForDays: PromiseOrValue<BigNumberish>,
-      _depositId: PromiseOrValue<BigNumberish>,
+    emergencyUnlock(
+      user: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    increaseMinExpectedPrice(
-      _newMinExpectedPrice: PromiseOrValue<BigNumberish>,
-      _depositId: PromiseOrValue<BigNumberish>,
+    extendLock(
+      additionalTime: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    lockerPass(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getLockInfo(
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    withdraw(
-      _depositId: PromiseOrValue<BigNumberish>,
+    lockETH(
+      lockTime: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    locks(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    unlockETH(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

@@ -4,8 +4,8 @@ import "@typechain/hardhat"
 import "solidity-coverage"
 import "tsconfig-paths/register"
 
-//import * as tenderly from "@tenderly/hardhat-tenderly"
-//tenderly.setup({ automaticVerifications: false })
+import * as tenderly from "@tenderly/hardhat-tenderly"
+tenderly.setup({ automaticVerifications: true })
 
 //import "@nomicfoundation/hardhat-verify";
 
@@ -63,9 +63,9 @@ const config: HardhatUserConfig = {
         ],
     },
     networks: {
-        tenderly: {
-            url: "https://rpc.tenderly.co/fork/bf713b88-9251-4057-b8cf-14121642ea2f",
-            accounts: [mainAcc],
+        virtual_polygon: {
+            url: "https://virtual.polygon.rpc.tenderly.co/1b876892-6239-4f56-bc14-615d4364564d",
+            chainId: 137,
         },
         devnet: {
             url: "http://127.0.0.1:7545",

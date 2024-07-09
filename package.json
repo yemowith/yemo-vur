@@ -17,7 +17,7 @@
     "script:deploy": "npx hardhat run ./src/yemovur/deploy.ts",
     "tester": "npx hardhat run ./src/vur.ts",
     "event:watch": "npx hardhat run ./src/events/events-listner.ts",
-    "yemovur": "npx hardhat run ./src/yemovur/Yemovur.ts",
+    "ykit": "npx hardhat run ./src/YKit/YKit.ts",
     "hh": "npx hardhat"
   },
   "devDependencies": {
@@ -73,6 +73,7 @@
     "@uniswap/v2-periphery": "^1.1.0-beta.0",
     "dotenv": "^16.0.3",
     "dsa-connect": "^0.6.75",
+    "lodash": "^4.17.21",
     "typescript": "^5.5.3"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"

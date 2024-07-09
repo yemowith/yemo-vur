@@ -180,7 +180,7 @@ contract DDSP is DSAth, DSNt {
     }
 }
 
-contract DDSPF {
+contract ProxyRegistry {
     event Created(
         address indexed sender,
         address indexed owner,
