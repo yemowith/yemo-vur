@@ -13,7 +13,11 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
@@ -29,10 +33,20 @@ export interface YKitFactoryInterface extends utils.Interface {
     "_AdvancedEscrow()": FunctionFragment;
     "_ContractFactory()": FunctionFragment;
     "_ETHLocker()": FunctionFragment;
+    "_StakingContract()": FunctionFragment;
+    "_WrappedTokenFactory()": FunctionFragment;
     "createNewAdvancedERC20Locker(address,address,address,uint256)": FunctionFragment;
     "createNewAdvancedEscrow(address,address,uint256)": FunctionFragment;
     "createNewContractFactory(address)": FunctionFragment;
+    "createNewERC20WrappedToken(address,string,string,uint8,address)": FunctionFragment;
     "createNewETHLocker(address)": FunctionFragment;
+    "createNewOffChainMultiSigWallet(uint256,address[])": FunctionFragment;
+    "createNewOnChainMultiSigWallet(uint256,address[])": FunctionFragment;
+    "createNewStakingContract(address,address,uint256,uint256,uint256)": FunctionFragment;
+    "createNewWrappedTokenFactory(address,address)": FunctionFragment;
+    "owner()": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
   };
 
   getFunction(
@@ -41,10 +55,20 @@ export interface YKitFactoryInterface extends utils.Interface {
       | "_AdvancedEscrow"
       | "_ContractFactory"
       | "_ETHLocker"
+      | "_StakingContract"
+      | "_WrappedTokenFactory"
       | "createNewAdvancedERC20Locker"
       | "createNewAdvancedEscrow"
       | "createNewContractFactory"
+      | "createNewERC20WrappedToken"
       | "createNewETHLocker"
+      | "createNewOffChainMultiSigWallet"
+      | "createNewOnChainMultiSigWallet"
+      | "createNewStakingContract"
+      | "createNewWrappedTokenFactory"
+      | "owner"
+      | "renounceOwnership"
+      | "transferOwnership"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -64,6 +88,14 @@ export interface YKitFactoryInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "_StakingContract",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_WrappedTokenFactory",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "createNewAdvancedERC20Locker",
     values: [
       PromiseOrValue<string>,
@@ -85,7 +117,48 @@ export interface YKitFactoryInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "createNewERC20WrappedToken",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
     functionFragment: "createNewETHLocker",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "createNewOffChainMultiSigWallet",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "createNewOnChainMultiSigWallet",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "createNewStakingContract",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "createNewWrappedTokenFactory",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "renounceOwnership",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership",
     values: [PromiseOrValue<string>]
   ): string;
 
@@ -103,6 +176,14 @@ export interface YKitFactoryInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "_ETHLocker", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "_StakingContract",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_WrappedTokenFactory",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "createNewAdvancedERC20Locker",
     data: BytesLike
   ): Result;
@@ -115,12 +196,57 @@ export interface YKitFactoryInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "createNewERC20WrappedToken",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "createNewETHLocker",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "createNewOffChainMultiSigWallet",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "createNewOnChainMultiSigWallet",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "createNewStakingContract",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "createNewWrappedTokenFactory",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
 
-  events: {};
+  events: {
+    "OwnershipTransferred(address,address)": EventFragment;
+  };
+
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
+
+export interface OwnershipTransferredEventObject {
+  previousOwner: string;
+  newOwner: string;
+}
+export type OwnershipTransferredEvent = TypedEvent<
+  [string, string],
+  OwnershipTransferredEventObject
+>;
+
+export type OwnershipTransferredEventFilter =
+  TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface YKitFactory extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -157,6 +283,10 @@ export interface YKitFactory extends BaseContract {
 
     _ETHLocker(overrides?: CallOverrides): Promise<[string]>;
 
+    _StakingContract(overrides?: CallOverrides): Promise<[string]>;
+
+    _WrappedTokenFactory(overrides?: CallOverrides): Promise<[string]>;
+
     createNewAdvancedERC20Locker(
       owner: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
@@ -177,8 +307,55 @@ export interface YKitFactory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    createNewERC20WrappedToken(
+      owner: PromiseOrValue<string>,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      decimals: PromiseOrValue<BigNumberish>,
+      underlying: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     createNewETHLocker(
       owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    createNewOffChainMultiSigWallet(
+      threshold: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    createNewOnChainMultiSigWallet(
+      threshold: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    createNewStakingContract(
+      owner: PromiseOrValue<string>,
+      stakingToken: PromiseOrValue<string>,
+      dailyRewardRate: PromiseOrValue<BigNumberish>,
+      weeklyRewardRate: PromiseOrValue<BigNumberish>,
+      monthlyRewardRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    createNewWrappedTokenFactory(
+      owner: PromiseOrValue<string>,
+      wrappedTokenImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -190,6 +367,10 @@ export interface YKitFactory extends BaseContract {
   _ContractFactory(overrides?: CallOverrides): Promise<string>;
 
   _ETHLocker(overrides?: CallOverrides): Promise<string>;
+
+  _StakingContract(overrides?: CallOverrides): Promise<string>;
+
+  _WrappedTokenFactory(overrides?: CallOverrides): Promise<string>;
 
   createNewAdvancedERC20Locker(
     owner: PromiseOrValue<string>,
@@ -211,8 +392,55 @@ export interface YKitFactory extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  createNewERC20WrappedToken(
+    owner: PromiseOrValue<string>,
+    name: PromiseOrValue<string>,
+    symbol: PromiseOrValue<string>,
+    decimals: PromiseOrValue<BigNumberish>,
+    underlying: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   createNewETHLocker(
     owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  createNewOffChainMultiSigWallet(
+    threshold: PromiseOrValue<BigNumberish>,
+    owners: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  createNewOnChainMultiSigWallet(
+    threshold: PromiseOrValue<BigNumberish>,
+    owners: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  createNewStakingContract(
+    owner: PromiseOrValue<string>,
+    stakingToken: PromiseOrValue<string>,
+    dailyRewardRate: PromiseOrValue<BigNumberish>,
+    weeklyRewardRate: PromiseOrValue<BigNumberish>,
+    monthlyRewardRate: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  createNewWrappedTokenFactory(
+    owner: PromiseOrValue<string>,
+    wrappedTokenImplementation: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  owner(overrides?: CallOverrides): Promise<string>;
+
+  renounceOwnership(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  transferOwnership(
+    newOwner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -225,6 +453,10 @@ export interface YKitFactory extends BaseContract {
 
     _ETHLocker(overrides?: CallOverrides): Promise<string>;
 
+    _StakingContract(overrides?: CallOverrides): Promise<string>;
+
+    _WrappedTokenFactory(overrides?: CallOverrides): Promise<string>;
+
     createNewAdvancedERC20Locker(
       owner: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
@@ -245,13 +477,67 @@ export interface YKitFactory extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
+    createNewERC20WrappedToken(
+      owner: PromiseOrValue<string>,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      decimals: PromiseOrValue<BigNumberish>,
+      underlying: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     createNewETHLocker(
       owner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    createNewOffChainMultiSigWallet(
+      threshold: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    createNewOnChainMultiSigWallet(
+      threshold: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    createNewStakingContract(
+      owner: PromiseOrValue<string>,
+      stakingToken: PromiseOrValue<string>,
+      dailyRewardRate: PromiseOrValue<BigNumberish>,
+      weeklyRewardRate: PromiseOrValue<BigNumberish>,
+      monthlyRewardRate: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    createNewWrappedTokenFactory(
+      owner: PromiseOrValue<string>,
+      wrappedTokenImplementation: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    owner(overrides?: CallOverrides): Promise<string>;
+
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
-  filters: {};
+  filters: {
+    "OwnershipTransferred(address,address)"(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
+    ): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
+    ): OwnershipTransferredEventFilter;
+  };
 
   estimateGas: {
     _AdvancedERC20Locker(overrides?: CallOverrides): Promise<BigNumber>;
@@ -262,6 +548,10 @@ export interface YKitFactory extends BaseContract {
 
     _ETHLocker(overrides?: CallOverrides): Promise<BigNumber>;
 
+    _StakingContract(overrides?: CallOverrides): Promise<BigNumber>;
+
+    _WrappedTokenFactory(overrides?: CallOverrides): Promise<BigNumber>;
+
     createNewAdvancedERC20Locker(
       owner: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
@@ -282,8 +572,55 @@ export interface YKitFactory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    createNewERC20WrappedToken(
+      owner: PromiseOrValue<string>,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      decimals: PromiseOrValue<BigNumberish>,
+      underlying: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     createNewETHLocker(
       owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    createNewOffChainMultiSigWallet(
+      threshold: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    createNewOnChainMultiSigWallet(
+      threshold: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    createNewStakingContract(
+      owner: PromiseOrValue<string>,
+      stakingToken: PromiseOrValue<string>,
+      dailyRewardRate: PromiseOrValue<BigNumberish>,
+      weeklyRewardRate: PromiseOrValue<BigNumberish>,
+      monthlyRewardRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    createNewWrappedTokenFactory(
+      owner: PromiseOrValue<string>,
+      wrappedTokenImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -299,6 +636,12 @@ export interface YKitFactory extends BaseContract {
 
     _ETHLocker(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    _StakingContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    _WrappedTokenFactory(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     createNewAdvancedERC20Locker(
       owner: PromiseOrValue<string>,
       token: PromiseOrValue<string>,
@@ -319,8 +662,55 @@ export interface YKitFactory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    createNewERC20WrappedToken(
+      owner: PromiseOrValue<string>,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      decimals: PromiseOrValue<BigNumberish>,
+      underlying: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     createNewETHLocker(
       owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    createNewOffChainMultiSigWallet(
+      threshold: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    createNewOnChainMultiSigWallet(
+      threshold: PromiseOrValue<BigNumberish>,
+      owners: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    createNewStakingContract(
+      owner: PromiseOrValue<string>,
+      stakingToken: PromiseOrValue<string>,
+      dailyRewardRate: PromiseOrValue<BigNumberish>,
+      weeklyRewardRate: PromiseOrValue<BigNumberish>,
+      monthlyRewardRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    createNewWrappedTokenFactory(
+      owner: PromiseOrValue<string>,
+      wrappedTokenImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    renounceOwnership(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

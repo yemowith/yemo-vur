@@ -1,20 +1,26 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "./ContractFactory/ContractFactory.sol";
 import "./Escrow/AdvancedEscrow.sol";
 import "./Locker/AdvancedERC20Locker.sol";
 import "./Locker/ETHLocker.sol";
 import "./Stake/StakingContract.sol";
+import "./Tokens/WrappedToken/ERC20WrappedToken.sol";
+import "./Tokens/WrappedToken/WrappedTokenFactory.sol";
+import "./Wallets/OffChain/OffChainMultiSigWallet.sol";
+import "./Wallets/OnChain/OnChainMultiSigWallet.sol";
 
-contract YKitFactory {
+contract YKitFactory is Ownable {
     ContractFactory public _ContractFactory;
     AdvancedEscrow public _AdvancedEscrow;
     AdvancedERC20Locker public _AdvancedERC20Locker;
     ETHLocker public _ETHLocker;
     StakingContract public _StakingContract;
+    WrappedTokenFactory public _WrappedTokenFactory;
 
-    constructor() {}
+    constructor() Ownable(msg.sender) {}
 
     function createNewContractFactory(
         address owner
@@ -115,5 +121,73 @@ contract YKitFactory {
         newStakingContract.transferOwnership(owner);
 
         return address(newStakingContract);
+    }
+
+    function createNewERC20WrappedToken(
+        address owner,
+        string memory name,
+        string memory symbol,
+        uint8 decimals,
+        IERC20 underlying
+    ) external returns (address) {
+        require(owner != address(0), "Invalid owner address");
+        require(
+            address(underlying) != address(0),
+            "Invalid underlying token address"
+        );
+
+        ERC20WrappedToken newERC20WrappedToken = new ERC20WrappedToken();
+        newERC20WrappedToken.initialize(name, symbol, decimals, underlying);
+        newERC20WrappedToken.transferOwnership(owner);
+
+        return address(newERC20WrappedToken);
+    }
+
+    function createNewWrappedTokenFactory(
+        address owner,
+        address wrappedTokenImplementation
+    ) external returns (address) {
+        require(owner != address(0), "Invalid owner address");
+        require(
+            wrappedTokenImplementation != address(0),
+            "Invalid wrapped token implementation address"
+        );
+
+        WrappedTokenFactory newWrappedTokenFactory = new WrappedTokenFactory(
+            wrappedTokenImplementation
+        );
+        newWrappedTokenFactory.transferOwnership(owner);
+
+        return address(newWrappedTokenFactory);
+    }
+
+    function createNewOffChainMultiSigWallet(
+        uint256 threshold,
+        address[] memory owners
+    ) external returns (address) {
+        require(owners.length > 0, "Owners required");
+        require(
+            threshold > 0 && threshold <= owners.length,
+            "Invalid threshold"
+        );
+
+        OffChainMultiSigWallet newOffChainMultiSigWallet = new OffChainMultiSigWallet(
+                threshold,
+                owners
+            );
+
+        return address(newOffChainMultiSigWallet);
+    }
+
+    function createNewOnChainMultiSigWallet(
+        uint256 threshold,
+        address[] memory owners
+    ) external returns (address) {
+        OnChainMultiSigWallet newOnChainMultiSigWallet = new OnChainMultiSigWallet(
+                owners,
+                threshold
+            );
+
+        return address(newOnChainMultiSigWallet);
     }
 }

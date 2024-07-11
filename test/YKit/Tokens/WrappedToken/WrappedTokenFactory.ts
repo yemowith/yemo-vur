@@ -1,5 +1,5 @@
 import { logg } from "@utils/core/logger"
-import { deploy, fromEther, fromWeiToEther, toEther, toWeiFromEther } from "@utils/tools"
+import { deploy, fromWeiToEther, toWeiFromEther } from "@utils/tools"
 import { BigNumber, Contract } from "ethers"
 import { ethers } from "hardhat"
 
@@ -9,11 +9,13 @@ describe("WrappedTokenFactory", function () {
     let wrappedTokenFactory: Contract
     let proxyAddress: string
     let wrappedToken: Contract
-    const initialSupply: BigNumber = toWeiFromEther("1000000")
+    const wrapAmount: BigNumber = toWeiFromEther("1000")
+    const unwrapAmount: BigNumber = toWeiFromEther("500")
 
     this.beforeAll(async function () {
         ;[deployer] = await ethers.getSigners()
-        // Deploy underlying ERC20 token
+
+        // Deploy the underlying ERC20 token
         underlyingToken = await (
             await deploy("ERC20Token", ["UnderlyingToken", "UND", deployer.address])
         ).deployed
@@ -21,10 +23,8 @@ describe("WrappedTokenFactory", function () {
         const deployerBalance = await underlyingToken.balanceOf(deployer.address)
         logg.info(`Deployer balance: ${fromWeiToEther(deployerBalance)}`)
 
-        // Deploy ERC20WrappedToken implementation
-        const wrappedTokenImplementation = await (
-            await deploy("ERC20WrappedToken", ["WrappedToken", "WTK", underlyingToken.address])
-        ).deployed
+        // Deploy the ERC20WrappedToken implementation
+        const wrappedTokenImplementation = await (await deploy("ERC20WrappedToken", [])).deployed
 
         // Deploy WrappedTokenFactory
         wrappedTokenFactory = await (
@@ -35,6 +35,7 @@ describe("WrappedTokenFactory", function () {
         const createTx = await wrappedTokenFactory.createWrappedToken(
             "WrappedToken",
             "WTK",
+            18,
             underlyingToken.address,
             {
                 gasLimit: 3000000,
@@ -52,16 +53,16 @@ describe("WrappedTokenFactory", function () {
     it("Wrapped Token Factory creates a new wrapped token", async function () {
         const name = await wrappedToken.name()
         const symbol = await wrappedToken.symbol()
+        const decimals = await wrappedToken.decimals()
         logg.info(`Wrapped Token Name: ${name}`)
         logg.info(`Wrapped Token Symbol: ${symbol}`)
+        logg.info(`Wrapped Token Decimals: ${decimals}`)
         logg.info(`Wrapped Token creation successful`)
     })
 
     it("Wrap tokens", async function () {
-        const amountToWrap = toWeiFromEther("1000")
-        await underlyingToken.approve(wrappedToken.address, amountToWrap)
-
-        const wrapTx = await wrappedToken.wrap(amountToWrap, {
+        await underlyingToken.approve(wrappedToken.address, wrapAmount)
+        const wrapTx = await wrappedToken.wrap(wrapAmount, {
             gasLimit: 3000000,
         })
         await wrapTx.wait()
@@ -72,9 +73,7 @@ describe("WrappedTokenFactory", function () {
     })
 
     it("Unwrap tokens", async function () {
-        const amountToUnwrap = toWeiFromEther("500")
-
-        const unwrapTx = await wrappedToken.unwrap(amountToUnwrap, {
+        const unwrapTx = await wrappedToken.unwrap(unwrapAmount, {
             gasLimit: 3000000,
         })
         await unwrapTx.wait()

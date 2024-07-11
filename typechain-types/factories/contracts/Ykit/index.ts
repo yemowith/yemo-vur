@@ -4,12 +4,11 @@
 export * as contractFactory from "./ContractFactory";
 export * as ddsProxy from "./DDSProxy";
 export * as escrow from "./Escrow";
-export * as flashloan from "./Flashloan";
 export * as locker from "./Locker";
 export * as operator from "./Operator";
 export * as stake from "./Stake";
 export * as swapper from "./Swapper";
+export * as tokens from "./Tokens";
 export * as vault from "./Vault";
 export * as wallets from "./Wallets";
-export * as wrappedToken from "./WrappedToken";
 export { YKitFactory__factory } from "./YKitFactory__factory";
