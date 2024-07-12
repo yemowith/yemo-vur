@@ -9,6 +9,7 @@ export * as operator from "./Operator";
 export * as stake from "./Stake";
 export * as swapper from "./Swapper";
 export * as tokens from "./Tokens";
+export * as transactions from "./Transactions";
 export * as vault from "./Vault";
 export * as wallets from "./Wallets";
 export { YKitFactory__factory } from "./YKitFactory__factory";

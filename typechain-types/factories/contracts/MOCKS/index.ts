@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as erc from "./ERC";
+export { MockContract__factory } from "./MockContract__factory";
 export { MockFactory__factory } from "./MockFactory__factory";

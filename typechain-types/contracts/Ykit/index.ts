@@ -17,6 +17,8 @@ import type * as swapper from "./Swapper";
 export type { swapper };
 import type * as tokens from "./Tokens";
 export type { tokens };
+import type * as transactions from "./Transactions";
+export type { transactions };
 import type * as vault from "./Vault";
 export type { vault };
 import type * as wallets from "./Wallets";

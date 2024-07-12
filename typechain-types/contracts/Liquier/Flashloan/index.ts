@@ -3,6 +3,6 @@
 /* eslint-disable */
 import type * as uniswapV3FlashSol from "./UniswapV3Flash.sol";
 export type { uniswapV3FlashSol };
+export type { FlashLoanCaller } from "./FlashLoanCaller";
 export type { FlashLoanContract } from "./FlashLoanContract";
-export type { SwapContract } from "./SwapContract";
 export type { UniSwapContract } from "./UniSwapContract";

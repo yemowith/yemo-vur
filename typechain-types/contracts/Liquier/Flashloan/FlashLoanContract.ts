@@ -31,14 +31,16 @@ export interface FlashLoanContractInterface extends utils.Interface {
   functions: {
     "ADDRESSES_PROVIDER()": FunctionFragment;
     "POOL()": FunctionFragment;
+    "callbackData()": FunctionFragment;
     "executeOperation(address,uint256,uint256,address,bytes)": FunctionFragment;
-    "requestFlashLoan(address,uint256)": FunctionFragment;
+    "requestFlashLoan(address,uint256,bytes)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "ADDRESSES_PROVIDER"
       | "POOL"
+      | "callbackData"
       | "executeOperation"
       | "requestFlashLoan"
   ): FunctionFragment;
@@ -48,6 +50,10 @@ export interface FlashLoanContractInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "POOL", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "callbackData",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "executeOperation",
     values: [
@@ -60,7 +66,11 @@ export interface FlashLoanContractInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "requestFlashLoan",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
 
   decodeFunctionResult(
@@ -68,6 +78,10 @@ export interface FlashLoanContractInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "POOL", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "callbackData",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "executeOperation",
     data: BytesLike
@@ -127,6 +141,8 @@ export interface FlashLoanContract extends BaseContract {
 
     POOL(overrides?: CallOverrides): Promise<[string]>;
 
+    callbackData(overrides?: CallOverrides): Promise<[string]>;
+
     executeOperation(
       asset: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -139,6 +155,7 @@ export interface FlashLoanContract extends BaseContract {
     requestFlashLoan(
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
@@ -146,6 +163,8 @@ export interface FlashLoanContract extends BaseContract {
   ADDRESSES_PROVIDER(overrides?: CallOverrides): Promise<string>;
 
   POOL(overrides?: CallOverrides): Promise<string>;
+
+  callbackData(overrides?: CallOverrides): Promise<string>;
 
   executeOperation(
     asset: PromiseOrValue<string>,
@@ -159,6 +178,7 @@ export interface FlashLoanContract extends BaseContract {
   requestFlashLoan(
     token: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
+    data: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -166,6 +186,8 @@ export interface FlashLoanContract extends BaseContract {
     ADDRESSES_PROVIDER(overrides?: CallOverrides): Promise<string>;
 
     POOL(overrides?: CallOverrides): Promise<string>;
+
+    callbackData(overrides?: CallOverrides): Promise<string>;
 
     executeOperation(
       asset: PromiseOrValue<string>,
@@ -179,6 +201,7 @@ export interface FlashLoanContract extends BaseContract {
     requestFlashLoan(
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -199,6 +222,8 @@ export interface FlashLoanContract extends BaseContract {
 
     POOL(overrides?: CallOverrides): Promise<BigNumber>;
 
+    callbackData(overrides?: CallOverrides): Promise<BigNumber>;
+
     executeOperation(
       asset: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -211,6 +236,7 @@ export interface FlashLoanContract extends BaseContract {
     requestFlashLoan(
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
@@ -222,6 +248,8 @@ export interface FlashLoanContract extends BaseContract {
 
     POOL(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    callbackData(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     executeOperation(
       asset: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -234,6 +262,7 @@ export interface FlashLoanContract extends BaseContract {
     requestFlashLoan(
       token: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

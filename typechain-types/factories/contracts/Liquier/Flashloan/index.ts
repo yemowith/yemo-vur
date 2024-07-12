@@ -2,6 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as uniswapV3FlashSol from "./UniswapV3Flash.sol";
+export { FlashLoanCaller__factory } from "./FlashLoanCaller__factory";
 export { FlashLoanContract__factory } from "./FlashLoanContract__factory";
-export { SwapContract__factory } from "./SwapContract__factory";
 export { UniSwapContract__factory } from "./UniSwapContract__factory";

@@ -29,6 +29,7 @@
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.3",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.8",
     "@nomiclabs/hardhat-ethers": "^2.1.1",
     "@nomiclabs/hardhat-etherscan": "^3.1.0",
     "@openzeppelin/contracts": "^5.0.2",
@@ -62,11 +63,8 @@
     "typechain": "^8.3.2"
   },
   "dependencies": {
-    "@connext/interfaces": "^2.0.0",
-    "@connext/sdk": "^0.2.7",
     "@openzeppelin/test-helpers": "^0.5.10",
-    "@tenderly/hardhat-tenderly": "^1.7.7",
-    "@tenderly/sdk": "^0.1.14",
+    "@tenderly/hardhat-tenderly": "^1.8.0",
     "@truffle/contract": "^4.0.0",
     "@types/memoizee": "^0.4.8",
     "@uniswap/v2-core": "^1.0.1",
@@ -75,6 +73,5 @@
     "dsa-connect": "^0.6.75",
     "lodash": "^4.17.21",
     "typescript": "^5.5.3"
-  },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  }
 }

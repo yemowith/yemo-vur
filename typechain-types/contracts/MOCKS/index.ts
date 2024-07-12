@@ -3,4 +3,5 @@
 /* eslint-disable */
 import type * as erc from "./ERC";
 export type { erc };
+export type { MockContract } from "./MockContract";
 export type { MockFactory } from "./MockFactory";

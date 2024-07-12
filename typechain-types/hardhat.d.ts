@@ -69,9 +69,17 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC20Metadata__factory>;
     getContractFactory(
+      name: "IERC20Permit",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC20Permit__factory>;
+    getContractFactory(
       name: "IERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC20__factory>;
+    getContractFactory(
+      name: "SafeERC20",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.SafeERC20__factory>;
     getContractFactory(
       name: "ERC721",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -88,6 +96,10 @@ declare module "hardhat/types/runtime" {
       name: "IERC721Receiver",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC721Receiver__factory>;
+    getContractFactory(
+      name: "Address",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Address__factory>;
     getContractFactory(
       name: "ECDSA",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -153,13 +165,13 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ISwapRouter__factory>;
     getContractFactory(
+      name: "FlashLoanCaller",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.FlashLoanCaller__factory>;
+    getContractFactory(
       name: "FlashLoanContract",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.FlashLoanContract__factory>;
-    getContractFactory(
-      name: "SwapContract",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.SwapContract__factory>;
     getContractFactory(
       name: "UniSwapContract",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -180,6 +192,10 @@ declare module "hardhat/types/runtime" {
       name: "ERC20Token",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC20Token__factory>;
+    getContractFactory(
+      name: "MockContract",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.MockContract__factory>;
     getContractFactory(
       name: "MockFactory",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -361,6 +377,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.WrappedTokenFactory__factory>;
     getContractFactory(
+      name: "MetaTransaction",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.MetaTransaction__factory>;
+    getContractFactory(
       name: "SimpleVault",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SimpleVault__factory>;
@@ -448,10 +468,20 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC20Metadata>;
     getContractAt(
+      name: "IERC20Permit",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC20Permit>;
+    getContractAt(
       name: "IERC20",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC20>;
+    getContractAt(
+      name: "SafeERC20",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.SafeERC20>;
     getContractAt(
       name: "ERC721",
       address: string,
@@ -472,6 +502,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC721Receiver>;
+    getContractAt(
+      name: "Address",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Address>;
     getContractAt(
       name: "ECDSA",
       address: string,
@@ -553,15 +588,15 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ISwapRouter>;
     getContractAt(
+      name: "FlashLoanCaller",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.FlashLoanCaller>;
+    getContractAt(
       name: "FlashLoanContract",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.FlashLoanContract>;
-    getContractAt(
-      name: "SwapContract",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.SwapContract>;
     getContractAt(
       name: "UniSwapContract",
       address: string,
@@ -587,6 +622,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ERC20Token>;
+    getContractAt(
+      name: "MockContract",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.MockContract>;
     getContractAt(
       name: "MockFactory",
       address: string,
@@ -812,6 +852,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.WrappedTokenFactory>;
+    getContractAt(
+      name: "MetaTransaction",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.MetaTransaction>;
     getContractAt(
       name: "SimpleVault",
       address: string,
