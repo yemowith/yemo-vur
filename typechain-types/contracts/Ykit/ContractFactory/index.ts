@@ -3,3 +3,4 @@
 /* eslint-disable */
 import type * as contractFactorySol from "./ContractFactory.sol";
 export type { contractFactorySol };
+export type { DeploylessCallViaBytecode } from "./DeploylessCallViaBytecode";

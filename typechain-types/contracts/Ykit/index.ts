@@ -11,6 +11,8 @@ import type * as locker from "./Locker";
 export type { locker };
 import type * as operator from "./Operator";
 export type { operator };
+import type * as proxies from "./Proxies";
+export type { proxies };
 import type * as stake from "./Stake";
 export type { stake };
 import type * as swapper from "./Swapper";

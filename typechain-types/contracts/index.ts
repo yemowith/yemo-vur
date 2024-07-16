@@ -5,6 +5,8 @@ import type * as liquier from "./Liquier";
 export type { liquier };
 import type * as mocks from "./MOCKS";
 export type { mocks };
+import type * as n12 from "./N12";
+export type { n12 };
 import type * as space from "./Space";
 export type { space };
 import type * as vault from "./Vault";

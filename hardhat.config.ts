@@ -12,7 +12,7 @@ import "solidity-coverage"
 import "tsconfig-paths/register"
 
 import * as tdly from "@tenderly/hardhat-tenderly"
-tdly.setup({ automaticVerifications: true })
+tdly.setup({ automaticVerifications: false })
 
 const ownerWallet = process.env.OWNER_PRIVATE_KEY as string
 const userWallet = process.env.USER_PRIVATE_KEY as string
@@ -49,7 +49,16 @@ const config: HardhatUserConfig = {
                 },
             },
             {
-                version: "0.8.20",
+                version: "0.5.1",
+                settings: {
+                    optimizer: {
+                        enabled: true,
+                        runs: 1000,
+                    },
+                },
+            },
+            {
+                version: "0.6.11",
                 settings: {
                     optimizer: {
                         enabled: true,

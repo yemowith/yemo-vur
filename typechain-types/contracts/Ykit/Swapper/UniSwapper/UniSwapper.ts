@@ -29,105 +29,90 @@ import type {
 
 export interface UniSwapperInterface extends utils.Interface {
   functions: {
-    "WETH()": FunctionFragment;
-    "fixedToken()": FunctionFragment;
-    "reswap(address,uint256,uint256,address,uint256)": FunctionFragment;
-    "swap(address,uint256,uint256,address,uint256)": FunctionFragment;
-    "uniswapRouter()": FunctionFragment;
-    "withdrawETH(uint256,address)": FunctionFragment;
-    "withdrawTokens(address,uint256,address)": FunctionFragment;
+    "swapExactInputSingle(address,address,uint24,uint256)": FunctionFragment;
+    "swapExactOutputSingle(address,address,uint24,uint256,uint256)": FunctionFragment;
+    "swapRouter()": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "WETH"
-      | "fixedToken"
-      | "reswap"
-      | "swap"
-      | "uniswapRouter"
-      | "withdrawETH"
-      | "withdrawTokens"
+      | "swapExactInputSingle"
+      | "swapExactOutputSingle"
+      | "swapRouter"
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "WETH", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "fixedToken",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "reswap",
+    functionFragment: "swapExactInputSingle",
     values: [
       PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "swap",
+    functionFragment: "swapExactOutputSingle",
     values: [
       PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "uniswapRouter",
+    functionFragment: "swapRouter",
     values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawETH",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawTokens",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>
-    ]
   ): string;
 
-  decodeFunctionResult(functionFragment: "WETH", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "fixedToken", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "reswap", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "swap", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "uniswapRouter",
+    functionFragment: "swapExactInputSingle",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "withdrawETH",
+    functionFragment: "swapExactOutputSingle",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawTokens",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "swapRouter", data: BytesLike): Result;
 
   events: {
-    "SwapExecuted(address,address,address,uint256,uint256)": EventFragment;
+    "SwapExactInputSingle(address,address,address,uint256,uint256)": EventFragment;
+    "SwapExactOutputSingle(address,address,address,uint256,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "SwapExecuted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SwapExactInputSingle"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SwapExactOutputSingle"): EventFragment;
 }
 
-export interface SwapExecutedEventObject {
-  sender: string;
+export interface SwapExactInputSingleEventObject {
+  user: string;
   tokenIn: string;
   tokenOut: string;
   amountIn: BigNumber;
   amountOut: BigNumber;
 }
-export type SwapExecutedEvent = TypedEvent<
+export type SwapExactInputSingleEvent = TypedEvent<
   [string, string, string, BigNumber, BigNumber],
-  SwapExecutedEventObject
+  SwapExactInputSingleEventObject
 >;
 
-export type SwapExecutedEventFilter = TypedEventFilter<SwapExecutedEvent>;
+export type SwapExactInputSingleEventFilter =
+  TypedEventFilter<SwapExactInputSingleEvent>;
+
+export interface SwapExactOutputSingleEventObject {
+  user: string;
+  tokenIn: string;
+  tokenOut: string;
+  amountOut: BigNumber;
+  amountIn: BigNumber;
+}
+export type SwapExactOutputSingleEvent = TypedEvent<
+  [string, string, string, BigNumber, BigNumber],
+  SwapExactOutputSingleEventObject
+>;
+
+export type SwapExactOutputSingleEventFilter =
+  TypedEventFilter<SwapExactOutputSingleEvent>;
 
 export interface UniSwapper extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -156,212 +141,137 @@ export interface UniSwapper extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    WETH(overrides?: CallOverrides): Promise<[string]>;
-
-    fixedToken(overrides?: CallOverrides): Promise<[string]>;
-
-    reswap(
-      tokenOut: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      amountOutMin: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      deadline: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    swap(
+    swapExactInputSingle(
       tokenIn: PromiseOrValue<string>,
+      tokenOut: PromiseOrValue<string>,
+      fee: PromiseOrValue<BigNumberish>,
       amountIn: PromiseOrValue<BigNumberish>,
-      amountOutMin: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      deadline: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    uniswapRouter(overrides?: CallOverrides): Promise<[string]>;
-
-    withdrawETH(
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+    swapExactOutputSingle(
+      tokenIn: PromiseOrValue<string>,
+      tokenOut: PromiseOrValue<string>,
+      fee: PromiseOrValue<BigNumberish>,
+      amountOut: PromiseOrValue<BigNumberish>,
+      amountInMaximum: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    withdrawTokens(
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    swapRouter(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  WETH(overrides?: CallOverrides): Promise<string>;
-
-  fixedToken(overrides?: CallOverrides): Promise<string>;
-
-  reswap(
-    tokenOut: PromiseOrValue<string>,
-    amountIn: PromiseOrValue<BigNumberish>,
-    amountOutMin: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    deadline: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  swap(
+  swapExactInputSingle(
     tokenIn: PromiseOrValue<string>,
+    tokenOut: PromiseOrValue<string>,
+    fee: PromiseOrValue<BigNumberish>,
     amountIn: PromiseOrValue<BigNumberish>,
-    amountOutMin: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    deadline: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  uniswapRouter(overrides?: CallOverrides): Promise<string>;
-
-  withdrawETH(
-    amount: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
+  swapExactOutputSingle(
+    tokenIn: PromiseOrValue<string>,
+    tokenOut: PromiseOrValue<string>,
+    fee: PromiseOrValue<BigNumberish>,
+    amountOut: PromiseOrValue<BigNumberish>,
+    amountInMaximum: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  withdrawTokens(
-    token: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  swapRouter(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    WETH(overrides?: CallOverrides): Promise<string>;
-
-    fixedToken(overrides?: CallOverrides): Promise<string>;
-
-    reswap(
-      tokenOut: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      amountOutMin: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      deadline: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber[]>;
-
-    swap(
+    swapExactInputSingle(
       tokenIn: PromiseOrValue<string>,
+      tokenOut: PromiseOrValue<string>,
+      fee: PromiseOrValue<BigNumberish>,
       amountIn: PromiseOrValue<BigNumberish>,
-      amountOutMin: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      deadline: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<BigNumber[]>;
+    ): Promise<BigNumber>;
 
-    uniswapRouter(overrides?: CallOverrides): Promise<string>;
-
-    withdrawETH(
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+    swapExactOutputSingle(
+      tokenIn: PromiseOrValue<string>,
+      tokenOut: PromiseOrValue<string>,
+      fee: PromiseOrValue<BigNumberish>,
+      amountOut: PromiseOrValue<BigNumberish>,
+      amountInMaximum: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<BigNumber>;
 
-    withdrawTokens(
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    swapRouter(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
-    "SwapExecuted(address,address,address,uint256,uint256)"(
-      sender?: PromiseOrValue<string> | null,
-      tokenIn?: PromiseOrValue<string> | null,
-      tokenOut?: PromiseOrValue<string> | null,
+    "SwapExactInputSingle(address,address,address,uint256,uint256)"(
+      user?: PromiseOrValue<string> | null,
+      tokenIn?: null,
+      tokenOut?: null,
       amountIn?: null,
       amountOut?: null
-    ): SwapExecutedEventFilter;
-    SwapExecuted(
-      sender?: PromiseOrValue<string> | null,
-      tokenIn?: PromiseOrValue<string> | null,
-      tokenOut?: PromiseOrValue<string> | null,
+    ): SwapExactInputSingleEventFilter;
+    SwapExactInputSingle(
+      user?: PromiseOrValue<string> | null,
+      tokenIn?: null,
+      tokenOut?: null,
       amountIn?: null,
       amountOut?: null
-    ): SwapExecutedEventFilter;
+    ): SwapExactInputSingleEventFilter;
+
+    "SwapExactOutputSingle(address,address,address,uint256,uint256)"(
+      user?: PromiseOrValue<string> | null,
+      tokenIn?: null,
+      tokenOut?: null,
+      amountOut?: null,
+      amountIn?: null
+    ): SwapExactOutputSingleEventFilter;
+    SwapExactOutputSingle(
+      user?: PromiseOrValue<string> | null,
+      tokenIn?: null,
+      tokenOut?: null,
+      amountOut?: null,
+      amountIn?: null
+    ): SwapExactOutputSingleEventFilter;
   };
 
   estimateGas: {
-    WETH(overrides?: CallOverrides): Promise<BigNumber>;
-
-    fixedToken(overrides?: CallOverrides): Promise<BigNumber>;
-
-    reswap(
-      tokenOut: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      amountOutMin: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      deadline: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    swap(
+    swapExactInputSingle(
       tokenIn: PromiseOrValue<string>,
+      tokenOut: PromiseOrValue<string>,
+      fee: PromiseOrValue<BigNumberish>,
       amountIn: PromiseOrValue<BigNumberish>,
-      amountOutMin: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      deadline: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    uniswapRouter(overrides?: CallOverrides): Promise<BigNumber>;
-
-    withdrawETH(
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+    swapExactOutputSingle(
+      tokenIn: PromiseOrValue<string>,
+      tokenOut: PromiseOrValue<string>,
+      fee: PromiseOrValue<BigNumberish>,
+      amountOut: PromiseOrValue<BigNumberish>,
+      amountInMaximum: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    withdrawTokens(
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    swapRouter(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    WETH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    fixedToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    reswap(
-      tokenOut: PromiseOrValue<string>,
-      amountIn: PromiseOrValue<BigNumberish>,
-      amountOutMin: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      deadline: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    swap(
+    swapExactInputSingle(
       tokenIn: PromiseOrValue<string>,
+      tokenOut: PromiseOrValue<string>,
+      fee: PromiseOrValue<BigNumberish>,
       amountIn: PromiseOrValue<BigNumberish>,
-      amountOutMin: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      deadline: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    uniswapRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    withdrawETH(
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+    swapExactOutputSingle(
+      tokenIn: PromiseOrValue<string>,
+      tokenOut: PromiseOrValue<string>,
+      fee: PromiseOrValue<BigNumberish>,
+      amountOut: PromiseOrValue<BigNumberish>,
+      amountInMaximum: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    withdrawTokens(
-      token: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    swapRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

@@ -1,118 +1,86 @@
-// SPDX-License-Identifier: GPL-3.0
-pragma solidity >=0.7.0 <0.9.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.17;
 
-import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
-import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol";
-import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
-import "@uniswap/v2-periphery/contracts/interfaces/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@uniswap/v2-periphery/contracts/UniswapV2Router02.sol";
+import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 contract UniSwapper {
-    address private owner;
-    IUniswapV2Router02 public uniswapRouter;
-    address public WETH;
-    address public fixedToken; // Fixed token address
+    using SafeMath for uint256;
 
-    event SwapExecuted(
-        address indexed sender,
-        address indexed tokenIn,
-        address indexed tokenOut,
+    IUniswapV2Router02 private router;
+    IERC20 private inToken;
+    IERC20 private outToken;
+
+    event SwapExactAmountIn(
+        address indexed user,
+        uint256 amountIn,
+        uint256 amountOut
+    );
+    event SwapExactAmountOut(
+        address indexed user,
         uint256 amountIn,
         uint256 amountOut
     );
 
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Caller is not the owner");
-        _;
+    constructor(address _router, address _inToken, address _outToken) {
+        router = IUniswapV2Router02(_router);
+        inToken = IERC20(_inToken);
+        outToken = IERC20(_outToken);
     }
 
-    constructor(address _uniswapRouter, address _fixedToken) {
-        owner = msg.sender;
-        uniswapRouter = IUniswapV2Router02(_uniswapRouter);
-        WETH = uniswapRouter.WETH();
-        fixedToken = _fixedToken; // Initialize fixed token
-    }
-
-    function swap(
-        address tokenIn,
+    function swapSingleHopExactAmountIn(
         uint256 amountIn,
-        uint256 amountOutMin,
-        address to,
-        uint256 deadline
-    ) external returns (uint256[] memory amounts) {
-        return _swap(tokenIn, fixedToken, amountIn, amountOutMin, to, deadline);
-    }
+        uint256 amountOutMin
+    ) external {
+        require(amountIn > 0, "Amount in must be greater than 0");
 
-    function reswap(
-        address tokenOut,
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address to,
-        uint256 deadline
-    ) external returns (uint256[] memory amounts) {
-        return
-            _swap(fixedToken, tokenOut, amountIn, amountOutMin, to, deadline);
-    }
+        inToken.transferFrom(msg.sender, address(this), amountIn);
+        inToken.approve(address(router), amountIn);
 
-    function _swap(
-        address tokenIn,
-        address tokenOut,
-        uint256 amountIn,
-        uint256 amountOutMin,
-        address to,
-        uint256 deadline
-    ) internal returns (uint256[] memory amounts) {
-        require(
-            IERC20(tokenIn).transferFrom(msg.sender, address(this), amountIn),
-            "Transfer of tokenIn failed"
-        );
-        require(
-            IERC20(tokenIn).approve(address(uniswapRouter), amountIn),
-            "Approval of tokenIn failed"
-        );
+        address[] memory path = new address[](2);
+        path[0] = address(inToken);
+        path[1] = address(outToken);
 
-        address[] memory path;
-        if (tokenIn == WETH || tokenOut == WETH) {
-            path = new address[](2);
-            path[0] = tokenIn;
-            path[1] = tokenOut;
-        } else {
-            path = new address[](3);
-            path[0] = tokenIn;
-            path[1] = WETH;
-            path[2] = tokenOut;
-        }
-
-        amounts = uniswapRouter.swapExactTokensForTokens(
+        uint[] memory amounts = router.swapExactTokensForTokens(
             amountIn,
             amountOutMin,
             path,
-            to,
-            deadline
-        );
-
-        emit SwapExecuted(
             msg.sender,
-            tokenIn,
-            tokenOut,
-            amountIn,
-            amounts[amounts.length - 1]
+            block.timestamp
         );
+
+        emit SwapExactAmountIn(msg.sender, amountIn, amounts[1]);
     }
 
-    function withdrawTokens(
-        address token,
-        uint256 amount,
-        address to
-    ) external onlyOwner {
-        require(IERC20(token).transfer(to, amount), "Transfer failed");
-    }
+    function swapSingleHopExactAmountOut(
+        uint256 amountOutDesired,
+        uint256 amountInMax
+    ) external {
+        require(
+            amountOutDesired > 0,
+            "Amount out desired must be greater than 0"
+        );
 
-    function withdrawETH(
-        uint256 amount,
-        address payable to
-    ) external onlyOwner {
-        to.transfer(amount);
-    }
+        inToken.transferFrom(msg.sender, address(this), amountInMax);
+        inToken.approve(address(router), amountInMax);
 
-    receive() external payable {}
+        address[] memory path = new address[](2);
+        path[0] = address(inToken);
+        path[1] = address(outToken);
+
+        uint[] memory amounts = router.swapTokensForExactTokens(
+            amountOutDesired,
+            amountInMax,
+            path,
+            msg.sender,
+            block.timestamp
+        );
+
+        if (amounts[0] < amountInMax) {
+            inToken.transfer(msg.sender, amountInMax.sub(amounts[0]));
+        }
+
+        emit SwapExactAmountOut(msg.sender, amounts[0], amountOutDesired);
+    }
 }

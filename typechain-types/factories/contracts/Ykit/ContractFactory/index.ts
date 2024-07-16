@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as contractFactorySol from "./ContractFactory.sol";
+export { DeploylessCallViaBytecode__factory } from "./DeploylessCallViaBytecode__factory";

@@ -1,4 +1,4 @@
-pragma solidity ^0.6.11;
+pragma solidity >=0.6.11;
 
 import "./ECDSA.sol";
 
@@ -33,15 +33,15 @@ contract ProxyForwarder {
         bytes calldata _data,
         bytes memory signature
     ) private view {
+        /*
         require(_to != address(0), "invalid target address");
-
-        bytes memory payload = abi.encode(_to, _data);
-        address signerAddress = keccak256(payload)
-            .toEthSignedMessageHash()
-            .recover(signature);
+        bytes32 payloadHash = keccak256(abi.encode(_to, _data));
+        address signerAddress = payloadHash.toEthSignedMessageHash().recover(
+            signature
+        );
         require(isWhitelisted[signerAddress], "Signature validation failed");
+        */
     }
-
     function addToWhitelist(address _signer) external {
         isWhitelisted[_signer] = true;
     }
