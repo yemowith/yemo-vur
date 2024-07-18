@@ -29,90 +29,76 @@ import type {
 
 export interface UniSwapperInterface extends utils.Interface {
   functions: {
-    "swapExactInputSingle(address,address,uint24,uint256)": FunctionFragment;
-    "swapExactOutputSingle(address,address,uint24,uint256,uint256)": FunctionFragment;
-    "swapRouter()": FunctionFragment;
+    "swapSingleHopExactAmountIn(uint256,uint256,uint24)": FunctionFragment;
+    "swapSingleHopExactAmountOut(uint256,uint256,uint24)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "swapExactInputSingle"
-      | "swapExactOutputSingle"
-      | "swapRouter"
+      | "swapSingleHopExactAmountIn"
+      | "swapSingleHopExactAmountOut"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "swapExactInputSingle",
+    functionFragment: "swapSingleHopExactAmountIn",
     values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "swapExactOutputSingle",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "swapRouter",
-    values?: undefined
+    functionFragment: "swapSingleHopExactAmountOut",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "swapExactInputSingle",
+    functionFragment: "swapSingleHopExactAmountIn",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "swapExactOutputSingle",
+    functionFragment: "swapSingleHopExactAmountOut",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "swapRouter", data: BytesLike): Result;
 
   events: {
-    "SwapExactInputSingle(address,address,address,uint256,uint256)": EventFragment;
-    "SwapExactOutputSingle(address,address,address,uint256,uint256)": EventFragment;
+    "SwapExactAmountIn(address,uint256,uint256)": EventFragment;
+    "SwapExactAmountOut(address,uint256,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "SwapExactInputSingle"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SwapExactOutputSingle"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SwapExactAmountIn"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "SwapExactAmountOut"): EventFragment;
 }
 
-export interface SwapExactInputSingleEventObject {
+export interface SwapExactAmountInEventObject {
   user: string;
-  tokenIn: string;
-  tokenOut: string;
   amountIn: BigNumber;
   amountOut: BigNumber;
 }
-export type SwapExactInputSingleEvent = TypedEvent<
-  [string, string, string, BigNumber, BigNumber],
-  SwapExactInputSingleEventObject
+export type SwapExactAmountInEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  SwapExactAmountInEventObject
 >;
 
-export type SwapExactInputSingleEventFilter =
-  TypedEventFilter<SwapExactInputSingleEvent>;
+export type SwapExactAmountInEventFilter =
+  TypedEventFilter<SwapExactAmountInEvent>;
 
-export interface SwapExactOutputSingleEventObject {
+export interface SwapExactAmountOutEventObject {
   user: string;
-  tokenIn: string;
-  tokenOut: string;
-  amountOut: BigNumber;
   amountIn: BigNumber;
+  amountOut: BigNumber;
 }
-export type SwapExactOutputSingleEvent = TypedEvent<
-  [string, string, string, BigNumber, BigNumber],
-  SwapExactOutputSingleEventObject
+export type SwapExactAmountOutEvent = TypedEvent<
+  [string, BigNumber, BigNumber],
+  SwapExactAmountOutEventObject
 >;
 
-export type SwapExactOutputSingleEventFilter =
-  TypedEventFilter<SwapExactOutputSingleEvent>;
+export type SwapExactAmountOutEventFilter =
+  TypedEventFilter<SwapExactAmountOutEvent>;
 
 export interface UniSwapper extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -141,137 +127,104 @@ export interface UniSwapper extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    swapExactInputSingle(
-      tokenIn: PromiseOrValue<string>,
-      tokenOut: PromiseOrValue<string>,
-      fee: PromiseOrValue<BigNumberish>,
+    swapSingleHopExactAmountIn(
       amountIn: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    swapExactOutputSingle(
-      tokenIn: PromiseOrValue<string>,
-      tokenOut: PromiseOrValue<string>,
+      amountOutMin: PromiseOrValue<BigNumberish>,
       fee: PromiseOrValue<BigNumberish>,
-      amountOut: PromiseOrValue<BigNumberish>,
-      amountInMaximum: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    swapRouter(overrides?: CallOverrides): Promise<[string]>;
+    swapSingleHopExactAmountOut(
+      amountOutDesired: PromiseOrValue<BigNumberish>,
+      amountInMax: PromiseOrValue<BigNumberish>,
+      fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
   };
 
-  swapExactInputSingle(
-    tokenIn: PromiseOrValue<string>,
-    tokenOut: PromiseOrValue<string>,
-    fee: PromiseOrValue<BigNumberish>,
+  swapSingleHopExactAmountIn(
     amountIn: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  swapExactOutputSingle(
-    tokenIn: PromiseOrValue<string>,
-    tokenOut: PromiseOrValue<string>,
+    amountOutMin: PromiseOrValue<BigNumberish>,
     fee: PromiseOrValue<BigNumberish>,
-    amountOut: PromiseOrValue<BigNumberish>,
-    amountInMaximum: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  swapRouter(overrides?: CallOverrides): Promise<string>;
+  swapSingleHopExactAmountOut(
+    amountOutDesired: PromiseOrValue<BigNumberish>,
+    amountInMax: PromiseOrValue<BigNumberish>,
+    fee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   callStatic: {
-    swapExactInputSingle(
-      tokenIn: PromiseOrValue<string>,
-      tokenOut: PromiseOrValue<string>,
-      fee: PromiseOrValue<BigNumberish>,
+    swapSingleHopExactAmountIn(
       amountIn: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    swapExactOutputSingle(
-      tokenIn: PromiseOrValue<string>,
-      tokenOut: PromiseOrValue<string>,
+      amountOutMin: PromiseOrValue<BigNumberish>,
       fee: PromiseOrValue<BigNumberish>,
-      amountOut: PromiseOrValue<BigNumberish>,
-      amountInMaximum: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ): Promise<void>;
 
-    swapRouter(overrides?: CallOverrides): Promise<string>;
+    swapSingleHopExactAmountOut(
+      amountOutDesired: PromiseOrValue<BigNumberish>,
+      amountInMax: PromiseOrValue<BigNumberish>,
+      fee: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {
-    "SwapExactInputSingle(address,address,address,uint256,uint256)"(
+    "SwapExactAmountIn(address,uint256,uint256)"(
       user?: PromiseOrValue<string> | null,
-      tokenIn?: null,
-      tokenOut?: null,
       amountIn?: null,
       amountOut?: null
-    ): SwapExactInputSingleEventFilter;
-    SwapExactInputSingle(
+    ): SwapExactAmountInEventFilter;
+    SwapExactAmountIn(
       user?: PromiseOrValue<string> | null,
-      tokenIn?: null,
-      tokenOut?: null,
       amountIn?: null,
       amountOut?: null
-    ): SwapExactInputSingleEventFilter;
+    ): SwapExactAmountInEventFilter;
 
-    "SwapExactOutputSingle(address,address,address,uint256,uint256)"(
+    "SwapExactAmountOut(address,uint256,uint256)"(
       user?: PromiseOrValue<string> | null,
-      tokenIn?: null,
-      tokenOut?: null,
-      amountOut?: null,
-      amountIn?: null
-    ): SwapExactOutputSingleEventFilter;
-    SwapExactOutputSingle(
+      amountIn?: null,
+      amountOut?: null
+    ): SwapExactAmountOutEventFilter;
+    SwapExactAmountOut(
       user?: PromiseOrValue<string> | null,
-      tokenIn?: null,
-      tokenOut?: null,
-      amountOut?: null,
-      amountIn?: null
-    ): SwapExactOutputSingleEventFilter;
+      amountIn?: null,
+      amountOut?: null
+    ): SwapExactAmountOutEventFilter;
   };
 
   estimateGas: {
-    swapExactInputSingle(
-      tokenIn: PromiseOrValue<string>,
-      tokenOut: PromiseOrValue<string>,
-      fee: PromiseOrValue<BigNumberish>,
+    swapSingleHopExactAmountIn(
       amountIn: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    swapExactOutputSingle(
-      tokenIn: PromiseOrValue<string>,
-      tokenOut: PromiseOrValue<string>,
+      amountOutMin: PromiseOrValue<BigNumberish>,
       fee: PromiseOrValue<BigNumberish>,
-      amountOut: PromiseOrValue<BigNumberish>,
-      amountInMaximum: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    swapRouter(overrides?: CallOverrides): Promise<BigNumber>;
+    swapSingleHopExactAmountOut(
+      amountOutDesired: PromiseOrValue<BigNumberish>,
+      amountInMax: PromiseOrValue<BigNumberish>,
+      fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    swapExactInputSingle(
-      tokenIn: PromiseOrValue<string>,
-      tokenOut: PromiseOrValue<string>,
-      fee: PromiseOrValue<BigNumberish>,
+    swapSingleHopExactAmountIn(
       amountIn: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    swapExactOutputSingle(
-      tokenIn: PromiseOrValue<string>,
-      tokenOut: PromiseOrValue<string>,
+      amountOutMin: PromiseOrValue<BigNumberish>,
       fee: PromiseOrValue<BigNumberish>,
-      amountOut: PromiseOrValue<BigNumberish>,
-      amountInMaximum: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    swapRouter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    swapSingleHopExactAmountOut(
+      amountOutDesired: PromiseOrValue<BigNumberish>,
+      amountInMax: PromiseOrValue<BigNumberish>,
+      fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
   };
 }

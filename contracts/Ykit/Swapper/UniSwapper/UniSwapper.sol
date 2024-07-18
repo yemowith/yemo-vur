@@ -2,15 +2,31 @@
 pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@uniswap/v2-periphery/contracts/UniswapV2Router02.sol";
-import "openzeppelin-solidity/contracts/math/SafeMath.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
+import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Factory.sol";
+import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
+
+library SafeMath {
+    function add(uint x, uint y) internal pure returns (uint z) {
+        require((z = x + y) >= x, "ds-math-add-overflow");
+    }
+
+    function sub(uint x, uint y) internal pure returns (uint z) {
+        require((z = x - y) <= x, "ds-math-sub-underflow");
+    }
+
+    function mul(uint x, uint y) internal pure returns (uint z) {
+        require(y == 0 || (z = x * y) / y == x, "ds-math-mul-overflow");
+    }
+}
 
 contract UniSwapper {
     using SafeMath for uint256;
 
-    IUniswapV2Router02 private router;
+    ISwapRouter private router;
     IERC20 private inToken;
     IERC20 private outToken;
+    IUniswapV3Factory private factory;
 
     event SwapExactAmountIn(
         address indexed user,
@@ -23,39 +39,49 @@ contract UniSwapper {
         uint256 amountOut
     );
 
-    constructor(address _router, address _inToken, address _outToken) {
-        router = IUniswapV2Router02(_router);
+    constructor(
+        address _router,
+        address _factory,
+        address _inToken,
+        address _outToken
+    ) {
+        router = ISwapRouter(_router);
+        factory = IUniswapV3Factory(_factory);
         inToken = IERC20(_inToken);
         outToken = IERC20(_outToken);
     }
 
     function swapSingleHopExactAmountIn(
         uint256 amountIn,
-        uint256 amountOutMin
+        uint256 amountOutMin,
+        uint24 fee
     ) external {
         require(amountIn > 0, "Amount in must be greater than 0");
 
         inToken.transferFrom(msg.sender, address(this), amountIn);
         inToken.approve(address(router), amountIn);
 
-        address[] memory path = new address[](2);
-        path[0] = address(inToken);
-        path[1] = address(outToken);
+        ISwapRouter.ExactInputSingleParams memory params = ISwapRouter
+            .ExactInputSingleParams({
+                tokenIn: address(inToken),
+                tokenOut: address(outToken),
+                fee: fee,
+                recipient: msg.sender,
+                deadline: block.timestamp,
+                amountIn: amountIn,
+                amountOutMinimum: amountOutMin,
+                sqrtPriceLimitX96: 0
+            });
 
-        uint[] memory amounts = router.swapExactTokensForTokens(
-            amountIn,
-            amountOutMin,
-            path,
-            msg.sender,
-            block.timestamp
-        );
+        uint256 amountOut = router.exactInputSingle(params);
 
-        emit SwapExactAmountIn(msg.sender, amountIn, amounts[1]);
+        emit SwapExactAmountIn(msg.sender, amountIn, amountOut);
     }
 
     function swapSingleHopExactAmountOut(
         uint256 amountOutDesired,
-        uint256 amountInMax
+        uint256 amountInMax,
+        uint24 fee
     ) external {
         require(
             amountOutDesired > 0,
@@ -65,22 +91,24 @@ contract UniSwapper {
         inToken.transferFrom(msg.sender, address(this), amountInMax);
         inToken.approve(address(router), amountInMax);
 
-        address[] memory path = new address[](2);
-        path[0] = address(inToken);
-        path[1] = address(outToken);
+        ISwapRouter.ExactOutputSingleParams memory params = ISwapRouter
+            .ExactOutputSingleParams({
+                tokenIn: address(inToken),
+                tokenOut: address(outToken),
+                fee: fee,
+                recipient: msg.sender,
+                deadline: block.timestamp,
+                amountOut: amountOutDesired,
+                amountInMaximum: amountInMax,
+                sqrtPriceLimitX96: 0
+            });
 
-        uint[] memory amounts = router.swapTokensForExactTokens(
-            amountOutDesired,
-            amountInMax,
-            path,
-            msg.sender,
-            block.timestamp
-        );
+        uint256 amountIn = router.exactOutputSingle(params);
 
-        if (amounts[0] < amountInMax) {
-            inToken.transfer(msg.sender, amountInMax.sub(amounts[0]));
+        if (amountIn < amountInMax) {
+            inToken.transfer(msg.sender, amountInMax.sub(amountIn));
         }
 
-        emit SwapExactAmountOut(msg.sender, amounts[0], amountOutDesired);
+        emit SwapExactAmountOut(msg.sender, amountIn, amountOutDesired);
     }
 }

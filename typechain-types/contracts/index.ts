@@ -9,6 +9,8 @@ import type * as n12 from "./N12";
 export type { n12 };
 import type * as space from "./Space";
 export type { space };
+import type * as tests from "./Tests";
+export type { tests };
 import type * as vault from "./Vault";
 export type { vault };
 import type * as ykit from "./Ykit";

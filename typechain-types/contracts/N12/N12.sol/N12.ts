@@ -13,11 +13,7 @@ import type {
   Signer,
   utils,
 } from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
+import type { FunctionFragment, Result } from "@ethersproject/abi";
 import type { Listener, Provider } from "@ethersproject/providers";
 import type {
   TypedEventFilter,
@@ -29,14 +25,9 @@ import type {
 
 export interface N12Interface extends utils.Interface {
   functions: {
-    "build(address)": FunctionFragment;
-    "cache()": FunctionFragment;
     "generateMultiN12Wlt(uint256)": FunctionFragment;
     "generateN12Vlt(address)": FunctionFragment;
-    "getProxy(address)": FunctionFragment;
     "getUserVaults(address)": FunctionFragment;
-    "isProxy(address)": FunctionFragment;
-    "proxies(address)": FunctionFragment;
     "userVaults(address,uint256)": FunctionFragment;
     "userWallets(address,uint256)": FunctionFragment;
     "wallet()": FunctionFragment;
@@ -44,24 +35,14 @@ export interface N12Interface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "build"
-      | "cache"
       | "generateMultiN12Wlt"
       | "generateN12Vlt"
-      | "getProxy"
       | "getUserVaults"
-      | "isProxy"
-      | "proxies"
       | "userVaults"
       | "userWallets"
       | "wallet"
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "build",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "cache", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "generateMultiN12Wlt",
     values: [PromiseOrValue<BigNumberish>]
@@ -71,19 +52,7 @@ export interface N12Interface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getProxy",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "getUserVaults",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isProxy",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "proxies",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
@@ -96,8 +65,6 @@ export interface N12Interface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "wallet", values?: undefined): string;
 
-  decodeFunctionResult(functionFragment: "build", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "cache", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "generateMultiN12Wlt",
     data: BytesLike
@@ -106,13 +73,10 @@ export interface N12Interface extends utils.Interface {
     functionFragment: "generateN12Vlt",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "getProxy", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getUserVaults",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "isProxy", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "proxies", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "userVaults", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "userWallets",
@@ -120,25 +84,8 @@ export interface N12Interface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "wallet", data: BytesLike): Result;
 
-  events: {
-    "Created(address,address,address,address)": EventFragment;
-  };
-
-  getEvent(nameOrSignatureOrTopic: "Created"): EventFragment;
+  events: {};
 }
-
-export interface CreatedEventObject {
-  sender: string;
-  owner: string;
-  proxy: string;
-  cache: string;
-}
-export type CreatedEvent = TypedEvent<
-  [string, string, string, string],
-  CreatedEventObject
->;
-
-export type CreatedEventFilter = TypedEventFilter<CreatedEvent>;
 
 export interface N12 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -167,13 +114,6 @@ export interface N12 extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    build(
-      owner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    cache(overrides?: CallOverrides): Promise<[string]>;
-
     generateMultiN12Wlt(
       count: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -184,25 +124,10 @@ export interface N12 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    getProxy(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
     getUserVaults(
       user: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[string[]]>;
-
-    isProxy(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    proxies(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
 
     userVaults(
       arg0: PromiseOrValue<string>,
@@ -219,13 +144,6 @@ export interface N12 extends BaseContract {
     wallet(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  build(
-    owner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  cache(overrides?: CallOverrides): Promise<string>;
-
   generateMultiN12Wlt(
     count: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -236,25 +154,10 @@ export interface N12 extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  getProxy(
-    owner: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
   getUserVaults(
     user: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<string[]>;
-
-  isProxy(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  proxies(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<string>;
 
   userVaults(
     arg0: PromiseOrValue<string>,
@@ -271,13 +174,6 @@ export interface N12 extends BaseContract {
   wallet(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    build(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    cache(overrides?: CallOverrides): Promise<string>;
-
     generateMultiN12Wlt(
       count: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -288,25 +184,10 @@ export interface N12 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    getProxy(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
     getUserVaults(
       user: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string[]>;
-
-    isProxy(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    proxies(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
 
     userVaults(
       arg0: PromiseOrValue<string>,
@@ -323,29 +204,9 @@ export interface N12 extends BaseContract {
     wallet(overrides?: CallOverrides): Promise<string>;
   };
 
-  filters: {
-    "Created(address,address,address,address)"(
-      sender?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<string> | null,
-      proxy?: null,
-      cache?: null
-    ): CreatedEventFilter;
-    Created(
-      sender?: PromiseOrValue<string> | null,
-      owner?: PromiseOrValue<string> | null,
-      proxy?: null,
-      cache?: null
-    ): CreatedEventFilter;
-  };
+  filters: {};
 
   estimateGas: {
-    build(
-      owner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    cache(overrides?: CallOverrides): Promise<BigNumber>;
-
     generateMultiN12Wlt(
       count: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -356,23 +217,8 @@ export interface N12 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    getProxy(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     getUserVaults(
       user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    isProxy(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    proxies(
-      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -392,13 +238,6 @@ export interface N12 extends BaseContract {
   };
 
   populateTransaction: {
-    build(
-      owner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    cache(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     generateMultiN12Wlt(
       count: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -409,23 +248,8 @@ export interface N12 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    getProxy(
-      owner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     getUserVaults(
       user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    isProxy(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    proxies(
-      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
