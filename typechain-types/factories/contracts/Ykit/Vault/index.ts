@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { SimpleVault__factory } from "./SimpleVault__factory";
+export { YBaseVault__factory } from "./YBaseVault__factory";

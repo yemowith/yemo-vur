@@ -173,6 +173,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MintFlashLoan__factory>;
     getContractFactory(
+      name: "Counter",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Counter__factory>;
+    getContractFactory(
+      name: "CounterWithStart",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CounterWithStart__factory>;
+    getContractFactory(
       name: "ERC20Token",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC20Token__factory>;
@@ -189,13 +197,17 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.HelprERC20__factory>;
     getContractFactory(
+      name: "Loaner",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Loaner__factory>;
+    getContractFactory(
       name: "Lockable",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Lockable__factory>;
     getContractFactory(
-      name: "N12",
+      name: "N12Factory",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.N12__factory>;
+    ): Promise<Contracts.N12Factory__factory>;
     getContractFactory(
       name: "N12Vlt",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -217,6 +229,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.YProxy__factory>;
     getContractFactory(
+      name: "N12",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.N12__factory>;
+    getContractFactory(
+      name: "DeployYKitBase",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.DeployYKitBase__factory>;
+    getContractFactory(
       name: "Adminable",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Adminable__factory>;
@@ -225,13 +245,9 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Ownable__factory>;
     getContractFactory(
-      name: "IYProxy",
+      name: "YESpace",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IYProxy__factory>;
-    getContractFactory(
-      name: "YSpace",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.YSpace__factory>;
+    ): Promise<Contracts.YESpace__factory>;
     getContractFactory(
       name: "IYAddressBook",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -317,26 +333,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.TestWallet__factory>;
     getContractFactory(
-      name: "YBaseVault",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.YBaseVault__factory>;
-    getContractFactory(
-      name: "AccountExecutor",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.AccountExecutor__factory>;
-    getContractFactory(
-      name: "AccountManager",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.AccountManager__factory>;
-    getContractFactory(
-      name: "AccountProxy",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.AccountProxy__factory>;
-    getContractFactory(
-      name: "ProxyDeployer",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ProxyDeployer__factory>;
-    getContractFactory(
       name: "ContractFactory",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ContractFactory__factory>;
@@ -401,6 +397,26 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ETHLocker__factory>;
     getContractFactory(
+      name: "AccountExecutor",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.AccountExecutor__factory>;
+    getContractFactory(
+      name: "AccountManager",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.AccountManager__factory>;
+    getContractFactory(
+      name: "AccountProxy",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.AccountProxy__factory>;
+    getContractFactory(
+      name: "RelayerManager",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.RelayerManager__factory>;
+    getContractFactory(
+      name: "SessionManager",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.SessionManager__factory>;
+    getContractFactory(
       name: "YOperator",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.YOperator__factory>;
@@ -412,10 +428,6 @@ declare module "hardhat/types/runtime" {
       name: "ProxyForwarder",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ProxyForwarder__factory>;
-    getContractFactory(
-      name: "SessionManager",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.SessionManager__factory>;
     getContractFactory(
       name: "CustomPausable",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -469,6 +481,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SimpleVault__factory>;
     getContractFactory(
+      name: "YBaseVault",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.YBaseVault__factory>;
+    getContractFactory(
       name: "CelerWallet",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.CelerWallet__factory>;
@@ -488,6 +504,10 @@ declare module "hardhat/types/runtime" {
       name: "YKitFactory",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.YKitFactory__factory>;
+    getContractFactory(
+      name: "YKitWalletFactory",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.YKitWalletFactory__factory>;
     getContractFactory(
       name: "PauserRole",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -702,6 +722,16 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.MintFlashLoan>;
     getContractAt(
+      name: "Counter",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Counter>;
+    getContractAt(
+      name: "CounterWithStart",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CounterWithStart>;
+    getContractAt(
       name: "ERC20Token",
       address: string,
       signer?: ethers.Signer
@@ -722,15 +752,20 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.HelprERC20>;
     getContractAt(
+      name: "Loaner",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Loaner>;
+    getContractAt(
       name: "Lockable",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Lockable>;
     getContractAt(
-      name: "N12",
+      name: "N12Factory",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.N12>;
+    ): Promise<Contracts.N12Factory>;
     getContractAt(
       name: "N12Vlt",
       address: string,
@@ -757,6 +792,16 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.YProxy>;
     getContractAt(
+      name: "N12",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.N12>;
+    getContractAt(
+      name: "DeployYKitBase",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.DeployYKitBase>;
+    getContractAt(
       name: "Adminable",
       address: string,
       signer?: ethers.Signer
@@ -767,15 +812,10 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.Ownable>;
     getContractAt(
-      name: "IYProxy",
+      name: "YESpace",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.IYProxy>;
-    getContractAt(
-      name: "YSpace",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.YSpace>;
+    ): Promise<Contracts.YESpace>;
     getContractAt(
       name: "IYAddressBook",
       address: string,
@@ -882,31 +922,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.TestWallet>;
     getContractAt(
-      name: "YBaseVault",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.YBaseVault>;
-    getContractAt(
-      name: "AccountExecutor",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.AccountExecutor>;
-    getContractAt(
-      name: "AccountManager",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.AccountManager>;
-    getContractAt(
-      name: "AccountProxy",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.AccountProxy>;
-    getContractAt(
-      name: "ProxyDeployer",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ProxyDeployer>;
-    getContractAt(
       name: "ContractFactory",
       address: string,
       signer?: ethers.Signer
@@ -987,6 +1002,31 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ETHLocker>;
     getContractAt(
+      name: "AccountExecutor",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.AccountExecutor>;
+    getContractAt(
+      name: "AccountManager",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.AccountManager>;
+    getContractAt(
+      name: "AccountProxy",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.AccountProxy>;
+    getContractAt(
+      name: "RelayerManager",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.RelayerManager>;
+    getContractAt(
+      name: "SessionManager",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.SessionManager>;
+    getContractAt(
       name: "YOperator",
       address: string,
       signer?: ethers.Signer
@@ -1001,11 +1041,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ProxyForwarder>;
-    getContractAt(
-      name: "SessionManager",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.SessionManager>;
     getContractAt(
       name: "CustomPausable",
       address: string,
@@ -1072,6 +1107,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.SimpleVault>;
     getContractAt(
+      name: "YBaseVault",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.YBaseVault>;
+    getContractAt(
       name: "CelerWallet",
       address: string,
       signer?: ethers.Signer
@@ -1096,6 +1136,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.YKitFactory>;
+    getContractAt(
+      name: "YKitWalletFactory",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.YKitWalletFactory>;
     getContractAt(
       name: "PauserRole",
       address: string,

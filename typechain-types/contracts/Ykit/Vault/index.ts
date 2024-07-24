@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { SimpleVault } from "./SimpleVault";
+export type { YBaseVault } from "./YBaseVault";

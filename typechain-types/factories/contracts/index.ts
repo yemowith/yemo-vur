@@ -6,5 +6,5 @@ export * as mocks from "./MOCKS";
 export * as n12 from "./N12";
 export * as space from "./Space";
 export * as tests from "./Tests";
-export * as vault from "./Vault";
 export * as ykit from "./Ykit";
+export * as scripts from "./scripts";

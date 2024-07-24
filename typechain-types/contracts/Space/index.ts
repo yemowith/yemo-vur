@@ -3,7 +3,6 @@
 /* eslint-disable */
 import type * as helper from "./Helper";
 export type { helper };
-import type * as ySpaceSol from "./YSpace.sol";
-export type { ySpaceSol };
 import type * as yTools from "./YTools";
 export type { yTools };
+export type { YESpace } from "./YESpace";

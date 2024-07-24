@@ -30,65 +30,39 @@ import type {
 export interface YSpaceInterface extends utils.Interface {
   functions: {
     "addressStore(string)": FunctionFragment;
-    "call(address,bytes)": FunctionFragment;
-    "callStatic(address,bytes)": FunctionFragment;
-    "changeOwner(address)": FunctionFragment;
     "changeSalt(bytes32)": FunctionFragment;
-    "changeSuperAdmin(address)": FunctionFragment;
     "decode(bytes,bytes32)": FunctionFragment;
     "deploy(uint256,bytes)": FunctionFragment;
-    "deployAndSetProxy(string,address)": FunctionFragment;
+    "deployAndSetProxy(bytes,address,string)": FunctionFragment;
     "deployProxy(address,string)": FunctionFragment;
     "encode(bytes,bytes32)": FunctionFragment;
-    "execute(address,bytes)": FunctionFragment;
-    "getAddress(uint256,bytes)": FunctionFragment;
     "getAddress(string)": FunctionFragment;
-    "getData(string)": FunctionFragment;
-    "getEncodedData(address,string,bytes)": FunctionFragment;
-    "getEncodedData(string,bytes)": FunctionFragment;
-    "getLastDeployed()": FunctionFragment;
     "getLastDeployedProxy()": FunctionFragment;
     "lastDeployedProxy()": FunctionFragment;
-    "lastDeployedProxyPy()": FunctionFragment;
-    "multiExecute(address[],bytes[])": FunctionFragment;
     "owner()": FunctionFragment;
-    "saveContractCode(bytes,string)": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
     "setAddress(string,address)": FunctionFragment;
-    "setData(string,bytes)": FunctionFragment;
-    "superAdmin()": FunctionFragment;
-    "validateEncodedData(bytes,bytes,bytes32)": FunctionFragment;
+    "storeAddress(string,address)": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "addressStore"
-      | "call"
-      | "callStatic"
-      | "changeOwner"
       | "changeSalt"
-      | "changeSuperAdmin"
       | "decode"
       | "deploy"
       | "deployAndSetProxy"
       | "deployProxy"
       | "encode"
-      | "execute"
-      | "getAddress(uint256,bytes)"
-      | "getAddress(string)"
-      | "getData"
-      | "getEncodedData(address,string,bytes)"
-      | "getEncodedData(string,bytes)"
-      | "getLastDeployed"
+      | "getAddress"
       | "getLastDeployedProxy"
       | "lastDeployedProxy"
-      | "lastDeployedProxyPy"
-      | "multiExecute"
       | "owner"
-      | "saveContractCode"
+      | "renounceOwnership"
       | "setAddress"
-      | "setData"
-      | "superAdmin"
-      | "validateEncodedData"
+      | "storeAddress"
+      | "transferOwnership"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -96,24 +70,8 @@ export interface YSpaceInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "call",
-    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "callStatic",
-    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "changeOwner",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "changeSalt",
     values: [PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "changeSuperAdmin",
-    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "decode",
@@ -125,7 +83,11 @@ export interface YSpaceInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "deployAndSetProxy",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "deployProxy",
@@ -136,36 +98,8 @@ export interface YSpaceInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "execute",
-    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getAddress(uint256,bytes)",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getAddress(string)",
+    functionFragment: "getAddress",
     values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getData",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getEncodedData(address,string,bytes)",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BytesLike>
-    ]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getEncodedData(string,bytes)",
-    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getLastDeployed",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "getLastDeployedProxy",
@@ -175,55 +109,29 @@ export interface YSpaceInterface extends utils.Interface {
     functionFragment: "lastDeployedProxy",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "lastDeployedProxyPy",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "multiExecute",
-    values: [PromiseOrValue<string>[], PromiseOrValue<BytesLike>[]]
-  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "saveContractCode",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+    functionFragment: "renounceOwnership",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "setAddress",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setData",
-    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
+    functionFragment: "storeAddress",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "superAdmin",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "validateEncodedData",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BytesLike>
-    ]
+    functionFragment: "transferOwnership",
+    values: [PromiseOrValue<string>]
   ): string;
 
   decodeFunctionResult(
     functionFragment: "addressStore",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "call", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "callStatic", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "changeOwner",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "changeSalt", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "changeSuperAdmin",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "decode", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "deploy", data: BytesLike): Result;
   decodeFunctionResult(
@@ -235,28 +143,7 @@ export interface YSpaceInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "encode", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "execute", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getAddress(uint256,bytes)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAddress(string)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "getData", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getEncodedData(address,string,bytes)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getEncodedData(string,bytes)",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getLastDeployed",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "getAddress", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getLastDeployedProxy",
     data: BytesLike
@@ -265,58 +152,61 @@ export interface YSpaceInterface extends utils.Interface {
     functionFragment: "lastDeployedProxy",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastDeployedProxyPy",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "multiExecute",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "saveContractCode",
+    functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setAddress", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setData", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "superAdmin", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "validateEncodedData",
+    functionFragment: "storeAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
 
   events: {
-    "OwnerChanged(address,address)": EventFragment;
-    "SuperAdminChanged(address,address)": EventFragment;
+    "AddressStored(string,address)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
+    "ProxyDeployed(address)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnerChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "SuperAdminChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "AddressStored"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ProxyDeployed"): EventFragment;
 }
 
-export interface OwnerChangedEventObject {
-  oldOwner: string;
+export interface AddressStoredEventObject {
+  key: string;
+  storedAddress: string;
+}
+export type AddressStoredEvent = TypedEvent<
+  [string, string],
+  AddressStoredEventObject
+>;
+
+export type AddressStoredEventFilter = TypedEventFilter<AddressStoredEvent>;
+
+export interface OwnershipTransferredEventObject {
+  previousOwner: string;
   newOwner: string;
 }
-export type OwnerChangedEvent = TypedEvent<
+export type OwnershipTransferredEvent = TypedEvent<
   [string, string],
-  OwnerChangedEventObject
+  OwnershipTransferredEventObject
 >;
 
-export type OwnerChangedEventFilter = TypedEventFilter<OwnerChangedEvent>;
+export type OwnershipTransferredEventFilter =
+  TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface SuperAdminChangedEventObject {
-  oldSuperAdmin: string;
-  newSuperAdmin: string;
+export interface ProxyDeployedEventObject {
+  deployedProxy: string;
 }
-export type SuperAdminChangedEvent = TypedEvent<
-  [string, string],
-  SuperAdminChangedEventObject
->;
+export type ProxyDeployedEvent = TypedEvent<[string], ProxyDeployedEventObject>;
 
-export type SuperAdminChangedEventFilter =
-  TypedEventFilter<SuperAdminChangedEvent>;
+export type ProxyDeployedEventFilter = TypedEventFilter<ProxyDeployedEvent>;
 
 export interface YSpace extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -350,30 +240,8 @@ export interface YSpace extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    call(
-      target: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    callStatic(
-      target: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    changeOwner(
-      _newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     changeSalt(
       newSalt: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    changeSuperAdmin(
-      newSuperAdmin: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -384,14 +252,15 @@ export interface YSpace extends BaseContract {
     ): Promise<[string]>;
 
     deploy(
-      _s: PromiseOrValue<BigNumberish>,
-      _b: PromiseOrValue<BytesLike>,
+      _salt: PromiseOrValue<BigNumberish>,
+      bytecode: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     deployAndSetProxy(
-      savedContractName: PromiseOrValue<string>,
+      contractCode: PromiseOrValue<BytesLike>,
       newOwner: PromiseOrValue<string>,
+      savedContractName: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -407,60 +276,18 @@ export interface YSpace extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    execute(
-      target: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    "getAddress(uint256,bytes)"(
-      _salt: PromiseOrValue<BigNumberish>,
-      bytecode: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    "getAddress(string)"(
+    getAddress(
       _key: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[string]>;
-
-    getData(
-      key: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    "getEncodedData(address,string,bytes)"(
-      target: PromiseOrValue<string>,
-      signature: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string, string]>;
-
-    "getEncodedData(string,bytes)"(
-      signature: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    getLastDeployed(overrides?: CallOverrides): Promise<[string]>;
 
     getLastDeployedProxy(overrides?: CallOverrides): Promise<[string]>;
 
     lastDeployedProxy(overrides?: CallOverrides): Promise<[string]>;
 
-    lastDeployedProxyPy(overrides?: CallOverrides): Promise<[string]>;
-
-    multiExecute(
-      targets: PromiseOrValue<string>[],
-      data: PromiseOrValue<BytesLike>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    saveContractCode(
-      code: PromiseOrValue<BytesLike>,
-      name: PromiseOrValue<string>,
+    renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -470,20 +297,16 @@ export interface YSpace extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    setData(
-      key: PromiseOrValue<string>,
-      value: PromiseOrValue<BytesLike>,
+    storeAddress(
+      _key: PromiseOrValue<string>,
+      _address: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    superAdmin(overrides?: CallOverrides): Promise<[string]>;
-
-    validateEncodedData(
-      encodedData: PromiseOrValue<BytesLike>,
-      originalData: PromiseOrValue<BytesLike>,
-      additionalParam: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
   };
 
   addressStore(
@@ -491,30 +314,8 @@ export interface YSpace extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  call(
-    target: PromiseOrValue<string>,
-    data: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  callStatic(
-    target: PromiseOrValue<string>,
-    data: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  changeOwner(
-    _newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   changeSalt(
     newSalt: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  changeSuperAdmin(
-    newSuperAdmin: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -525,14 +326,15 @@ export interface YSpace extends BaseContract {
   ): Promise<string>;
 
   deploy(
-    _s: PromiseOrValue<BigNumberish>,
-    _b: PromiseOrValue<BytesLike>,
+    _salt: PromiseOrValue<BigNumberish>,
+    bytecode: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   deployAndSetProxy(
-    savedContractName: PromiseOrValue<string>,
+    contractCode: PromiseOrValue<BytesLike>,
     newOwner: PromiseOrValue<string>,
+    savedContractName: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -548,60 +350,18 @@ export interface YSpace extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  execute(
-    target: PromiseOrValue<string>,
-    data: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  "getAddress(uint256,bytes)"(
-    _salt: PromiseOrValue<BigNumberish>,
-    bytecode: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  "getAddress(string)"(
+  getAddress(
     _key: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<string>;
-
-  getData(
-    key: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  "getEncodedData(address,string,bytes)"(
-    target: PromiseOrValue<string>,
-    signature: PromiseOrValue<string>,
-    params: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<[string, string]>;
-
-  "getEncodedData(string,bytes)"(
-    signature: PromiseOrValue<string>,
-    params: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  getLastDeployed(overrides?: CallOverrides): Promise<string>;
 
   getLastDeployedProxy(overrides?: CallOverrides): Promise<string>;
 
   lastDeployedProxy(overrides?: CallOverrides): Promise<string>;
 
-  lastDeployedProxyPy(overrides?: CallOverrides): Promise<string>;
-
-  multiExecute(
-    targets: PromiseOrValue<string>[],
-    data: PromiseOrValue<BytesLike>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   owner(overrides?: CallOverrides): Promise<string>;
 
-  saveContractCode(
-    code: PromiseOrValue<BytesLike>,
-    name: PromiseOrValue<string>,
+  renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -611,20 +371,16 @@ export interface YSpace extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  setData(
-    key: PromiseOrValue<string>,
-    value: PromiseOrValue<BytesLike>,
+  storeAddress(
+    _key: PromiseOrValue<string>,
+    _address: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  superAdmin(overrides?: CallOverrides): Promise<string>;
-
-  validateEncodedData(
-    encodedData: PromiseOrValue<BytesLike>,
-    originalData: PromiseOrValue<BytesLike>,
-    additionalParam: PromiseOrValue<BytesLike>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  transferOwnership(
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   callStatic: {
     addressStore(
@@ -632,30 +388,8 @@ export interface YSpace extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    call(
-      target: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    callStatic(
-      target: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    changeOwner(
-      _newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     changeSalt(
       newSalt: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    changeSuperAdmin(
-      newSuperAdmin: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -666,14 +400,15 @@ export interface YSpace extends BaseContract {
     ): Promise<string>;
 
     deploy(
-      _s: PromiseOrValue<BigNumberish>,
-      _b: PromiseOrValue<BytesLike>,
+      _salt: PromiseOrValue<BigNumberish>,
+      bytecode: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
 
     deployAndSetProxy(
-      savedContractName: PromiseOrValue<string>,
+      contractCode: PromiseOrValue<BytesLike>,
       newOwner: PromiseOrValue<string>,
+      savedContractName: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -689,62 +424,18 @@ export interface YSpace extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    execute(
-      target: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    "getAddress(uint256,bytes)"(
-      _salt: PromiseOrValue<BigNumberish>,
-      bytecode: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    "getAddress(string)"(
+    getAddress(
       _key: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
-
-    getData(
-      key: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    "getEncodedData(address,string,bytes)"(
-      target: PromiseOrValue<string>,
-      signature: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<[string, string]>;
-
-    "getEncodedData(string,bytes)"(
-      signature: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    getLastDeployed(overrides?: CallOverrides): Promise<string>;
 
     getLastDeployedProxy(overrides?: CallOverrides): Promise<string>;
 
     lastDeployedProxy(overrides?: CallOverrides): Promise<string>;
 
-    lastDeployedProxyPy(overrides?: CallOverrides): Promise<string>;
-
-    multiExecute(
-      targets: PromiseOrValue<string>[],
-      data: PromiseOrValue<BytesLike>[],
-      overrides?: CallOverrides
-    ): Promise<string[]>;
-
     owner(overrides?: CallOverrides): Promise<string>;
 
-    saveContractCode(
-      code: PromiseOrValue<BytesLike>,
-      name: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     setAddress(
       _key: PromiseOrValue<string>,
@@ -752,40 +443,36 @@ export interface YSpace extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    setData(
-      key: PromiseOrValue<string>,
-      value: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    superAdmin(overrides?: CallOverrides): Promise<string>;
-
-    validateEncodedData(
-      encodedData: PromiseOrValue<BytesLike>,
-      originalData: PromiseOrValue<BytesLike>,
-      additionalParam: PromiseOrValue<BytesLike>,
+    storeAddress(
+      _key: PromiseOrValue<string>,
+      _address: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {
-    "OwnerChanged(address,address)"(
-      oldOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
-    ): OwnerChangedEventFilter;
-    OwnerChanged(
-      oldOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
-    ): OwnerChangedEventFilter;
+    "AddressStored(string,address)"(
+      key?: null,
+      storedAddress?: null
+    ): AddressStoredEventFilter;
+    AddressStored(key?: null, storedAddress?: null): AddressStoredEventFilter;
 
-    "SuperAdminChanged(address,address)"(
-      oldSuperAdmin?: PromiseOrValue<string> | null,
-      newSuperAdmin?: PromiseOrValue<string> | null
-    ): SuperAdminChangedEventFilter;
-    SuperAdminChanged(
-      oldSuperAdmin?: PromiseOrValue<string> | null,
-      newSuperAdmin?: PromiseOrValue<string> | null
-    ): SuperAdminChangedEventFilter;
+    "OwnershipTransferred(address,address)"(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
+    ): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
+    ): OwnershipTransferredEventFilter;
+
+    "ProxyDeployed(address)"(deployedProxy?: null): ProxyDeployedEventFilter;
+    ProxyDeployed(deployedProxy?: null): ProxyDeployedEventFilter;
   };
 
   estimateGas: {
@@ -794,30 +481,8 @@ export interface YSpace extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    call(
-      target: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    callStatic(
-      target: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    changeOwner(
-      _newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     changeSalt(
       newSalt: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    changeSuperAdmin(
-      newSuperAdmin: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -828,14 +493,15 @@ export interface YSpace extends BaseContract {
     ): Promise<BigNumber>;
 
     deploy(
-      _s: PromiseOrValue<BigNumberish>,
-      _b: PromiseOrValue<BytesLike>,
+      _salt: PromiseOrValue<BigNumberish>,
+      bytecode: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     deployAndSetProxy(
-      savedContractName: PromiseOrValue<string>,
+      contractCode: PromiseOrValue<BytesLike>,
       newOwner: PromiseOrValue<string>,
+      savedContractName: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -851,60 +517,18 @@ export interface YSpace extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    execute(
-      target: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    "getAddress(uint256,bytes)"(
-      _salt: PromiseOrValue<BigNumberish>,
-      bytecode: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "getAddress(string)"(
+    getAddress(
       _key: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    getData(
-      key: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "getEncodedData(address,string,bytes)"(
-      target: PromiseOrValue<string>,
-      signature: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "getEncodedData(string,bytes)"(
-      signature: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getLastDeployed(overrides?: CallOverrides): Promise<BigNumber>;
 
     getLastDeployedProxy(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastDeployedProxy(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastDeployedProxyPy(overrides?: CallOverrides): Promise<BigNumber>;
-
-    multiExecute(
-      targets: PromiseOrValue<string>[],
-      data: PromiseOrValue<BytesLike>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    saveContractCode(
-      code: PromiseOrValue<BytesLike>,
-      name: PromiseOrValue<string>,
+    renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -914,19 +538,15 @@ export interface YSpace extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    setData(
-      key: PromiseOrValue<string>,
-      value: PromiseOrValue<BytesLike>,
+    storeAddress(
+      _key: PromiseOrValue<string>,
+      _address: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    superAdmin(overrides?: CallOverrides): Promise<BigNumber>;
-
-    validateEncodedData(
-      encodedData: PromiseOrValue<BytesLike>,
-      originalData: PromiseOrValue<BytesLike>,
-      additionalParam: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
@@ -936,30 +556,8 @@ export interface YSpace extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    call(
-      target: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    callStatic(
-      target: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    changeOwner(
-      _newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     changeSalt(
       newSalt: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    changeSuperAdmin(
-      newSuperAdmin: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -970,14 +568,15 @@ export interface YSpace extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     deploy(
-      _s: PromiseOrValue<BigNumberish>,
-      _b: PromiseOrValue<BytesLike>,
+      _salt: PromiseOrValue<BigNumberish>,
+      bytecode: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     deployAndSetProxy(
-      savedContractName: PromiseOrValue<string>,
+      contractCode: PromiseOrValue<BytesLike>,
       newOwner: PromiseOrValue<string>,
+      savedContractName: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -993,42 +592,10 @@ export interface YSpace extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    execute(
-      target: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    "getAddress(uint256,bytes)"(
-      _salt: PromiseOrValue<BigNumberish>,
-      bytecode: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "getAddress(string)"(
+    getAddress(
       _key: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
-
-    getData(
-      key: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "getEncodedData(address,string,bytes)"(
-      target: PromiseOrValue<string>,
-      signature: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "getEncodedData(string,bytes)"(
-      signature: PromiseOrValue<string>,
-      params: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getLastDeployed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getLastDeployedProxy(
       overrides?: CallOverrides
@@ -1036,21 +603,9 @@ export interface YSpace extends BaseContract {
 
     lastDeployedProxy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lastDeployedProxyPy(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    multiExecute(
-      targets: PromiseOrValue<string>[],
-      data: PromiseOrValue<BytesLike>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    saveContractCode(
-      code: PromiseOrValue<BytesLike>,
-      name: PromiseOrValue<string>,
+    renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1060,19 +615,15 @@ export interface YSpace extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    setData(
-      key: PromiseOrValue<string>,
-      value: PromiseOrValue<BytesLike>,
+    storeAddress(
+      _key: PromiseOrValue<string>,
+      _address: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    superAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    validateEncodedData(
-      encodedData: PromiseOrValue<BytesLike>,
-      originalData: PromiseOrValue<BytesLike>,
-      additionalParam: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

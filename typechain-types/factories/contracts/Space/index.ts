@@ -2,5 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as helper from "./Helper";
-export * as ySpaceSol from "./YSpace.sol";
 export * as yTools from "./YTools";
+export { YESpace__factory } from "./YESpace__factory";

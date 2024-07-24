@@ -4,7 +4,6 @@
 import type {
   BaseContract,
   BigNumber,
-  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -25,61 +24,66 @@ import type {
 
 export interface N12Interface extends utils.Interface {
   functions: {
-    "generateMultiN12Wlt(uint256)": FunctionFragment;
-    "generateN12Vlt(address)": FunctionFragment;
-    "getUserVaults(address)": FunctionFragment;
-    "userVaults(address,uint256)": FunctionFragment;
-    "userWallets(address,uint256)": FunctionFragment;
+    "accountManager()": FunctionFragment;
+    "erc20Locker()": FunctionFragment;
+    "ethLocker()": FunctionFragment;
+    "factory()": FunctionFragment;
+    "init()": FunctionFragment;
+    "initialized()": FunctionFragment;
+    "sessionManager()": FunctionFragment;
     "wallet()": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "generateMultiN12Wlt"
-      | "generateN12Vlt"
-      | "getUserVaults"
-      | "userVaults"
-      | "userWallets"
+      | "accountManager"
+      | "erc20Locker"
+      | "ethLocker"
+      | "factory"
+      | "init"
+      | "initialized"
+      | "sessionManager"
       | "wallet"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "generateMultiN12Wlt",
-    values: [PromiseOrValue<BigNumberish>]
+    functionFragment: "accountManager",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "generateN12Vlt",
-    values: [PromiseOrValue<string>]
+    functionFragment: "erc20Locker",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "ethLocker", values?: undefined): string;
+  encodeFunctionData(functionFragment: "factory", values?: undefined): string;
+  encodeFunctionData(functionFragment: "init", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "initialized",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getUserVaults",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "userVaults",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "userWallets",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    functionFragment: "sessionManager",
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "wallet", values?: undefined): string;
 
   decodeFunctionResult(
-    functionFragment: "generateMultiN12Wlt",
+    functionFragment: "accountManager",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "generateN12Vlt",
+    functionFragment: "erc20Locker",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "ethLocker", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "factory", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "init", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "initialized",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getUserVaults",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "userVaults", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "userWallets",
+    functionFragment: "sessionManager",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "wallet", data: BytesLike): Result;
@@ -114,92 +118,57 @@ export interface N12 extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    generateMultiN12Wlt(
-      count: PromiseOrValue<BigNumberish>,
+    accountManager(overrides?: CallOverrides): Promise<[string]>;
+
+    erc20Locker(overrides?: CallOverrides): Promise<[string]>;
+
+    ethLocker(overrides?: CallOverrides): Promise<[string]>;
+
+    factory(overrides?: CallOverrides): Promise<[string]>;
+
+    init(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    generateN12Vlt(
-      _mainAsset: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    initialized(overrides?: CallOverrides): Promise<[boolean]>;
 
-    getUserVaults(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[string[]]>;
-
-    userVaults(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    userWallets(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
+    sessionManager(overrides?: CallOverrides): Promise<[string]>;
 
     wallet(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  generateMultiN12Wlt(
-    count: PromiseOrValue<BigNumberish>,
+  accountManager(overrides?: CallOverrides): Promise<string>;
+
+  erc20Locker(overrides?: CallOverrides): Promise<string>;
+
+  ethLocker(overrides?: CallOverrides): Promise<string>;
+
+  factory(overrides?: CallOverrides): Promise<string>;
+
+  init(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  generateN12Vlt(
-    _mainAsset: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  initialized(overrides?: CallOverrides): Promise<boolean>;
 
-  getUserVaults(
-    user: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<string[]>;
-
-  userVaults(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  userWallets(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
+  sessionManager(overrides?: CallOverrides): Promise<string>;
 
   wallet(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    generateMultiN12Wlt(
-      count: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string[]>;
+    accountManager(overrides?: CallOverrides): Promise<string>;
 
-    generateN12Vlt(
-      _mainAsset: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    erc20Locker(overrides?: CallOverrides): Promise<string>;
 
-    getUserVaults(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string[]>;
+    ethLocker(overrides?: CallOverrides): Promise<string>;
 
-    userVaults(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    factory(overrides?: CallOverrides): Promise<string>;
 
-    userWallets(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
+    init(overrides?: CallOverrides): Promise<void>;
+
+    initialized(overrides?: CallOverrides): Promise<boolean>;
+
+    sessionManager(overrides?: CallOverrides): Promise<string>;
 
     wallet(overrides?: CallOverrides): Promise<string>;
   };
@@ -207,63 +176,41 @@ export interface N12 extends BaseContract {
   filters: {};
 
   estimateGas: {
-    generateMultiN12Wlt(
-      count: PromiseOrValue<BigNumberish>,
+    accountManager(overrides?: CallOverrides): Promise<BigNumber>;
+
+    erc20Locker(overrides?: CallOverrides): Promise<BigNumber>;
+
+    ethLocker(overrides?: CallOverrides): Promise<BigNumber>;
+
+    factory(overrides?: CallOverrides): Promise<BigNumber>;
+
+    init(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    generateN12Vlt(
-      _mainAsset: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    initialized(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserVaults(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    userVaults(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    userWallets(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    sessionManager(overrides?: CallOverrides): Promise<BigNumber>;
 
     wallet(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    generateMultiN12Wlt(
-      count: PromiseOrValue<BigNumberish>,
+    accountManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    erc20Locker(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    ethLocker(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    init(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    generateN12Vlt(
-      _mainAsset: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    initialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUserVaults(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    userVaults(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    userWallets(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    sessionManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     wallet(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
