@@ -19,18 +19,31 @@ contract MintFlashLoan is FlashLoanSimpleReceiverBase {
     ) external override returns (bool) {
         // Logic go here.
 
+        // Decode the params and perform the custom logic
+        (address target, bytes memory data) = abi.decode(
+            params,
+            (address, bytes)
+        );
+        (bool success, ) = target.call(data);
+        require(success, "External call failed");
+
         // Approve the LendingPool contract allowance to *pull* the owed amount
         uint256 amountOwed = amount + premium;
-        //  FAUCET.mint(asset, premium);
         IERC20(asset).approve(address(POOL), amountOwed);
 
         return true;
     }
 
-    function executeFlashLoan(address asset, uint256 amount) public {
+    function executeFlashLoan(
+        address asset,
+        uint256 amount,
+        address target,
+        bytes memory data
+    ) public {
         address receiverAddress = address(this);
 
-        bytes memory params = "";
+        // Encode the target and data into params
+        bytes memory params = abi.encode(target, data);
         uint16 referralCode = 0;
 
         POOL.flashLoanSimple(
